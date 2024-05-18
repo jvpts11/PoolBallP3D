@@ -62,7 +62,7 @@ float _lastY = 0.0f;
 bool _firstMouse = true;
 
 // animação de uma bola
-int _animatedBallIndex = 4;
+int _animatedBallIndex = 11;	//bola 5
 bool _animationStarted = false;
 bool _animationFinished = false;
 
@@ -142,13 +142,13 @@ void init(void) {
 	// -----------------------------------------------------------
 
 	// posição da mesa
-	float xCoord = 1.25f;
+	float xCoord = 2.0f;
 	float yCoord = 0.25f;
 	float zCoord = 1.25f;
 
 	// cores da mesa
 	std::vector<glm::vec3> colors{
-		glm::vec3(1.0f, 0.0f, 0.0f),	   // vermelho
+			glm::vec3(1.0f, 0.0f, 0.0f),   // vermelho
 			glm::vec3(1.0f, 1.0f, 0.0f),   // amarelo
 			glm::vec3(0.0f, 1.0f, 0.0f),   // verde
 			glm::vec3(0.0f, 1.0f, 1.0f),   // ciano
@@ -278,40 +278,73 @@ void init(void) {
 
 	// posições das bolas
 	std::vector<glm::vec3> _positions = {
-		glm::vec3(1.1f, 0.33f, 1.1f),		// bola 1
-		glm::vec3(-1.1f, 0.33f, -1.1f),		// bola 2
-		glm::vec3(-1.1f, 0.33f, 1.1f),		// bola 3
-		glm::vec3(1.1f, 0.33f, -1.1f),		// bola 4
-		glm::vec3(0.1f, 0.33f, -0.1f),		// bola 5
-		glm::vec3(-0.3f, 0.33f, -0.3f),		// bola 6
-		glm::vec3(-0.6f, 0.33f, -0.4f),		// bola 7
-		glm::vec3(0.8f, 0.33f, 0.7f),		// bola 8
-		glm::vec3(-0.8f, 0.33f, -0.2f),		// bola 9
-		glm::vec3(0.3f, 0.33f, 0.7f),		// bola 10
-		glm::vec3(-0.2f, 0.33f, -0.8f),		// bola 11
-		glm::vec3(0.7f, 0.33f, 0.5f),		// bola 12
-		glm::vec3(-0.9f, 0.33f, 0.6f),		// bola 13
-		glm::vec3(0.1f, 0.33f, 0.3f),		// bola 14
-		glm::vec3(0.4f, 0.33f, -0.6f),		// bola 15
+		//glm::vec3(1.1f, 0.33f, 1.1f),			// bola 1
+		//glm::vec3(-1.1f, 0.33f, -1.1f),		// bola 2
+		//glm::vec3(-1.1f, 0.33f, 1.1f),		// bola 3
+		//glm::vec3(1.1f, 0.33f, -1.1f),		// bola 4
+		//glm::vec3(0.1f, 0.33f, -0.1f),		// bola 5
+		//glm::vec3(-0.3f, 0.33f, -0.3f),		// bola 6
+		//glm::vec3(-0.6f, 0.33f, -0.4f),		// bola 7
+		//glm::vec3(0.8f, 0.33f, 0.7f),			// bola 8
+		//glm::vec3(-0.8f, 0.33f, -0.2f),		// bola 9
+		//glm::vec3(0.3f, 0.33f, 0.7f),			// bola 10
+		//glm::vec3(-0.2f, 0.33f, -0.8f),		// bola 11
+		//glm::vec3(0.7f, 0.33f, 0.5f),			// bola 12
+		//glm::vec3(-0.9f, 0.33f, 0.6f),		// bola 13
+		//glm::vec3(0.1f, 0.33f, 0.3f),			// bola 14
+		//glm::vec3(0.4f, 0.33f, -0.6f),		// bola 15
+
+		glm::vec3((static_cast <float> (rand()) / static_cast <float> (RAND_MAX)) * 3.7f - 1.85f, 0.33f, (static_cast <float> (rand()) / static_cast <float> (RAND_MAX)) * 2.2f - 1.1f), // bola 1
+		glm::vec3((static_cast <float> (rand()) / static_cast <float> (RAND_MAX)) * 3.7f - 1.85f, 0.33f, (static_cast <float> (rand()) / static_cast <float> (RAND_MAX)) * 2.2f - 1.1f), // bola 2
+		glm::vec3((static_cast <float> (rand()) / static_cast <float> (RAND_MAX)) * 3.7f - 1.85f, 0.33f, (static_cast <float> (rand()) / static_cast <float> (RAND_MAX)) * 2.2f - 1.1f), // bola 3
+		glm::vec3((static_cast <float> (rand()) / static_cast <float> (RAND_MAX)) * 3.7f - 1.85f, 0.33f, (static_cast <float> (rand()) / static_cast <float> (RAND_MAX)) * 2.2f - 1.1f), // bola 4
+		glm::vec3(0.1f, 0.33f, -0.1f), // bola 5
+		glm::vec3((static_cast <float> (rand()) / static_cast <float> (RAND_MAX)) * 3.7f - 1.85f, 0.33f, (static_cast <float> (rand()) / static_cast <float> (RAND_MAX)) * 2.2f - 1.1f), // bola 6
+		glm::vec3((static_cast <float> (rand()) / static_cast <float> (RAND_MAX)) * 3.7f - 1.85f, 0.33f, (static_cast <float> (rand()) / static_cast <float> (RAND_MAX)) * 2.2f - 1.1f), // bola 7
+		glm::vec3((static_cast <float> (rand()) / static_cast <float> (RAND_MAX)) * 3.7f - 1.85f, 0.33f, (static_cast <float> (rand()) / static_cast <float> (RAND_MAX)) * 2.2f - 1.1f), // bola 8
+		glm::vec3((static_cast <float> (rand()) / static_cast <float> (RAND_MAX)) * 3.7f - 1.85f, 0.33f, (static_cast <float> (rand()) / static_cast <float> (RAND_MAX)) * 2.2f - 1.1f), // bola 9
+		glm::vec3((static_cast <float> (rand()) / static_cast <float> (RAND_MAX)) * 3.7f - 1.85f, 0.33f, (static_cast <float> (rand()) / static_cast <float> (RAND_MAX)) * 2.2f - 1.1f), // bola 10
+		glm::vec3((static_cast <float> (rand()) / static_cast <float> (RAND_MAX)) * 3.7f - 1.85f, 0.33f, (static_cast <float> (rand()) / static_cast <float> (RAND_MAX)) * 2.2f - 1.1f), // bola 11
+		glm::vec3(0.7f, 0.33f, 0.5f), // bola 12
+		glm::vec3((static_cast <float> (rand()) / static_cast <float> (RAND_MAX)) * 3.7f - 1.85f, 0.33f, (static_cast <float> (rand()) / static_cast <float> (RAND_MAX)) * 2.2f - 1.1f), // bola 13
+		glm::vec3((static_cast <float> (rand()) / static_cast <float> (RAND_MAX)) * 3.7f - 1.85f, 0.33f, (static_cast <float> (rand()) / static_cast <float> (RAND_MAX)) * 2.2f - 1.1f), // bola 14
+		glm::vec3((static_cast <float> (rand()) / static_cast <float> (RAND_MAX)) * 3.7f - 1.85f, 0.33f, (static_cast <float> (rand()) / static_cast <float> (RAND_MAX)) * 2.2f - 1.1f), // bola 15
 	};
 
 	// rotações das bolas
 	std::vector<glm::vec3> _orientations = {
-		glm::vec3(0.0f),		// bola 1
-		glm::vec3(0.0f),		// bola 2
-		glm::vec3(0.0f),		// bola 3
-		glm::vec3(0.0f),		// bola 4
-		glm::vec3(0.0f),		// bola 5
-		glm::vec3(0.0f),		// bola 6
-		glm::vec3(0.0f),		// bola 7
-		glm::vec3(0.0f),		// bola 8
-		glm::vec3(0.0f),		// bola 9
-		glm::vec3(0.0f),		// bola 10
-		glm::vec3(0.0f),		// bola 11
-		glm::vec3(0.0f),		// bola 12
-		glm::vec3(0.0f),		// bola 13
-		glm::vec3(0.0f),		// bola 14
-		glm::vec3(0.0f),		// bola 15
+		//glm::vec3(0.0f),		// bola 1
+		//glm::vec3(0.0f),		// bola 2
+		//glm::vec3(0.0f),		// bola 3
+		//glm::vec3(0.0f),		// bola 4
+		//glm::vec3(0.0f),		// bola 5
+		//glm::vec3(0.0f),		// bola 6
+		//glm::vec3(0.0f),		// bola 7
+		//glm::vec3(0.0f),		// bola 8
+		//glm::vec3(0.0f),		// bola 9
+		//glm::vec3(0.0f),		// bola 10
+		//glm::vec3(0.0f),		// bola 11
+		//glm::vec3(0.0f),		// bola 12
+		//glm::vec3(0.0f),		// bola 13
+		//glm::vec3(0.0f),		// bola 14
+		//glm::vec3(0.0f),		// bola 15
+					  
+		glm::vec3((static_cast <float> (rand()) / static_cast <float> (RAND_MAX)) * 360.0f), // bola 1
+		glm::vec3((static_cast <float> (rand()) / static_cast <float> (RAND_MAX)) * 360.0f), // bola 2
+		glm::vec3((static_cast <float> (rand()) / static_cast <float> (RAND_MAX)) * 360.0f), // bola 3
+		glm::vec3((static_cast <float> (rand()) / static_cast <float> (RAND_MAX)) * 360.0f), // bola 4
+		glm::vec3((static_cast <float> (rand()) / static_cast <float> (RAND_MAX)) * 360.0f), // bola 5
+		glm::vec3((static_cast <float> (rand()) / static_cast <float> (RAND_MAX)) * 360.0f), // bola 6
+		glm::vec3((static_cast <float> (rand()) / static_cast <float> (RAND_MAX)) * 360.0f), // bola 7
+		glm::vec3((static_cast <float> (rand()) / static_cast <float> (RAND_MAX)) * 360.0f), // bola 8
+		glm::vec3((static_cast <float> (rand()) / static_cast <float> (RAND_MAX)) * 360.0f), // bola 9
+		glm::vec3((static_cast <float> (rand()) / static_cast <float> (RAND_MAX)) * 360.0f), // bola 10
+		glm::vec3((static_cast <float> (rand()) / static_cast <float> (RAND_MAX)) * 360.0f), // bola 11
+		glm::vec3(0.0f), // bola 12
+		glm::vec3((static_cast <float> (rand()) / static_cast <float> (RAND_MAX)) * 360.0f), // bola 13
+		glm::vec3((static_cast <float> (rand()) / static_cast <float> (RAND_MAX)) * 360.0f), // bola 14
+		glm::vec3((static_cast <float> (rand()) / static_cast <float> (RAND_MAX)) * 360.0f), // bola 15
+
 	};
 
 	// para cada bola, define um identificador único, posição e orientação,
@@ -320,7 +353,7 @@ void init(void) {
 		_rendererBalls[i].setId(i + 1);
 
 		std::string objFilepath = "textures/Ball" + std::to_string(i + 1) + ".obj";
-		_rendererBalls[i].Read(objFilepath);
+		_rendererBalls[i].Load(objFilepath);
 
 		_rendererBalls[i].setPosition(_positions[i]);
 		_rendererBalls[i].setOrientation(_orientations[i]);
@@ -330,7 +363,7 @@ void init(void) {
 		// Enviar dados das bolas para GPU
 		// -----------------------------------------------------------
 
-		_rendererBalls[i].Send();
+		_rendererBalls[i].Install();
 	}
 
 
@@ -438,7 +471,7 @@ void display(void) {
 
 	// desenha para cada bola
 	for (int i = 0; i < _numberOfBalls; i++) {
-		_rendererBalls[i].Draw(_rendererBalls[i].getPosition(), _rendererBalls[i].getOrientation());
+		_rendererBalls[i].Render(_rendererBalls[i].getPosition(), _rendererBalls[i].getOrientation());
 	}
 
 
@@ -450,19 +483,22 @@ void display(void) {
 	if (_animationStarted && !_animationFinished) {
 		// move a bola em X e Z
 		_rendererBalls[_animatedBallIndex].setPosition(glm::vec3(
-			_rendererBalls[_animatedBallIndex].getPosition().x + 0.001f,
+			_rendererBalls[_animatedBallIndex].getPosition().x - 0.005f,
 			_rendererBalls[_animatedBallIndex].getPosition().y,
-			_rendererBalls[_animatedBallIndex].getPosition().z + 0.001f
+			_rendererBalls[_animatedBallIndex].getPosition().z - 0.005f
 		));
 
-		// roda a bola em X, Y e Z
-		_rendererBalls[_animatedBallIndex].setOrientation(_rendererBalls[_animatedBallIndex].getOrientation() + 2.0f);
+		// roda a bola
+			_rendererBalls[_animatedBallIndex].setOrientation(glm::vec3(
+				_rendererBalls[_animatedBallIndex].getOrientation().x - 2.0f,
+				_rendererBalls[_animatedBallIndex].getOrientation().y + 2.0f,
+				_rendererBalls[_animatedBallIndex].getOrientation().z + 2.0f));
 
 		// se colidiu com outro objeto
 		if (isColliding()) {
 			_animationStarted = false;
 			_animationFinished = true;
-			std::cout << "Colidiu com bola ou mesa." << std::endl;
+			std::cout << "Colidiu com a bola ou a mesa." << std::endl;
 		}
 	}
 }
@@ -517,8 +553,8 @@ bool isColliding(void) {
 	}
 
 	// se colidiu com os limites da mesa
-	if (_rendererBalls[_animatedBallIndex].getPosition().x + _ballRadius >= 1.25f || _rendererBalls[_animatedBallIndex].getPosition().x - _ballRadius <= -1.25f ||
-		_rendererBalls[_animatedBallIndex].getPosition().z + _ballRadius >= 1.25f || _rendererBalls[_animatedBallIndex].getPosition().z - _ballRadius <= -1.25f) {
+	if (_rendererBalls[_animatedBallIndex].getPosition().x - _ballRadius >= 1.3f || _rendererBalls[_animatedBallIndex].getPosition().x + _ballRadius <= -1.3f ||
+		_rendererBalls[_animatedBallIndex].getPosition().z - _ballRadius >= 2.05f || _rendererBalls[_animatedBallIndex].getPosition().z + _ballRadius <= -2.05f) {
 		return true;
 	}
 

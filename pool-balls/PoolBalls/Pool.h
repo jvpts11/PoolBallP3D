@@ -97,9 +97,9 @@ namespace Pool {
 		~RendererBall();
 
 		// principais
-		void Read(const std::string obj_model_filepath);
-		void Send(void);
-		void Draw(glm::vec3 position, glm::vec3 orientation);
+		void Load(const std::string obj_model_filepath);
+		void Install(void);
+		void Render(glm::vec3 position, glm::vec3 orientation);
 
 		// secundárias
 		std::vector<float>* load3dModel(const char* objFilepath);

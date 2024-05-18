@@ -22,7 +22,7 @@
 
 #define SCREEN_WIDTH 800
 #define SCREEN_HEIGHT 600
-#define SCREEN_NAME "Bilhar"
+#define SCREEN_NAME "Projeto P3D"
 
 #pragma endregion
 

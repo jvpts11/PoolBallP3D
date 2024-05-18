@@ -166,7 +166,7 @@ namespace Pool {
 
 #pragma region funções principais da classe RendererBall
 
-	void RendererBall::Read(const std::string obj_model_filepath) {
+	void RendererBall::Load(const std::string obj_model_filepath) {
 		_objFilepath = obj_model_filepath.c_str();
 
 		// armazena o modelo 3D
@@ -181,7 +181,7 @@ namespace Pool {
 		_texture = loadTexture(textureFilename);
 	}
 
-	void RendererBall::Send(void) {
+	void RendererBall::Install(void) {
 		// gera o nome para o VAO da bola
 		glGenVertexArrays(1, _vao);
 
@@ -238,7 +238,7 @@ namespace Pool {
 		glGenerateMipmap(GL_TEXTURE_2D);
 	}
 
-	void RendererBall::Draw(glm::vec3 position, glm::vec3 orientation) {
+	void RendererBall::Render(glm::vec3 position, glm::vec3 orientation) {
 		// atualizar valores de iluminação do objeto
 		Material* material = _material;
 		loadMaterialLighting(_programShader, *material);
@@ -312,7 +312,7 @@ namespace Pool {
 
 				glm::vec2 textCoord = {
 					attributes.texcoords[2 * index.texcoord_index],
-					attributes.texcoords[2 * index.texcoord_index + 1]
+					1.0f - attributes.texcoords[2 * index.texcoord_index + 1]
 				};
 
 				vertices->push_back(pos.x);

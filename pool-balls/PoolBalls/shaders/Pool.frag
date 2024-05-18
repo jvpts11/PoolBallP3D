@@ -72,7 +72,7 @@ struct SpotLight {
 // estrutura do material do objeto
 struct Material {
 	float shininess;	// ns
-	vec3 ambient;		// Ka
+	vec3 ambient;		// ka
 	vec3 diffuse;		// kd
 	vec3 specular;		// ks
 };
