@@ -1,8 +1,11 @@
 /*
- * @descrição	Ficheiro relativo ao vertex shader.
- * @ficheiro	Pool.vert
- * @autor(s)	Henrique Azevedo a23488, Luís Pereira a18446, Pedro Silva a20721, Vânia Pereira a19264
- * @data		11/06/2023
+@3D Programming
+
+@description File related to the vertex shader.
+@file Pool.vert
+
+@authors João Tavares nº21871, Diogo Silva nº22369, Ademar Valente nº23155, José lourenço nº23496
+@date 19/05/2024
 */
 
 

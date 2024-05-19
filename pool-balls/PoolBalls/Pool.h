@@ -1,8 +1,11 @@
 /*
- * @descrição	Ficheiro com todas as assinaturas relativas à biblioteca Pool.
- * @ficheiro	Pool.h
- * @autor(s)	Henrique Azevedo a23488, Luís Pereira a18446, Pedro Silva a20721, Vânia Pereira a19264
- * @data		11/06/2023
+@3D Programming
+
+@description File with all signatures related to the Pool library.
+@file Pool.h
+
+@authors João Tavares nº21871, Diogo Silva nº22369, Ademar Valente nº23155, José lourenço nº23496
+@date 19/05/2024
 */
 
 
@@ -11,7 +14,7 @@
 #ifndef POOL_BALLS_H
 #define POOL_BALLS_H 1
 
-#pragma region importações
+#pragma region importations
 
 #include <iostream>
 #include <vector>
@@ -32,7 +35,7 @@
 
 namespace Pool {
 
-#pragma region declarações da biblioteca
+#pragma region library declarations
 
 	// estrutura para armazenados dados dos ficheiros .mtl
 	typedef struct {
