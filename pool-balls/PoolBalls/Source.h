@@ -1,8 +1,11 @@
 /*
- * @descrição	Ficheiro com todas as assinaturas relativas à aplicação em si.
- * @ficheiro	Source.h
- * @autor(s)	Henrique Azevedo a23488, Luís Pereira a18446, Pedro Silva a20721, Vânia Pereira a19264
- * @data		11/06/2023
+@3D Programming
+
+@description File with all signatures related to the application itself.
+@file Source.h
+
+@authors João Tavares nº21871, Diogo Silva nº22369, Ademar Valente nº23155, José lourenço nº23496
+@date 19/05/2024
 */
 
 
@@ -11,23 +14,23 @@
 #ifndef SOURCE_H
 #define SOURCE_H 1
 
-#pragma region importações
+#pragma region importations
 
 #include <GLFW\glfw3.h>
 
 #pragma endregion
 
 
-#pragma region constantes
+#pragma region constants
 
-#define SCREEN_WIDTH 800
-#define SCREEN_HEIGHT 600
-#define SCREEN_NAME "Projeto P3D"
+#define SCREEN_WIDTH 1280
+#define SCREEN_HEIGHT 720
+#define SCREEN_NAME "Pool Game"
 
 #pragma endregion
 
 
-#pragma region funções do programa
+#pragma region program functions
 
 	void init(void);
 	void display(void);
@@ -37,7 +40,7 @@
 #pragma endregion
 
 
-#pragma region funções de callbacks para a biblioteca glfw
+#pragma region glfw library callback functions
 
 	void printErrorCallback(int code, const char* description);
 	void scrollCallback(GLFWwindow* window, double xoffset, double yoffset);

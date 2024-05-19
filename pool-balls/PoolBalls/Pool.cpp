@@ -1,12 +1,15 @@
 ﻿/*
- * @descrição	Ficheiro com todo o código relativo à biblioteca Pool.
- * @ficheiro	Pool.cpp
- * @autor(s)	Henrique Azevedo a23488, Luís Pereira a18446, Pedro Silva a20721, Vânia Pereira a19264
- * @data		11/06/2023
+@3D Programming
+
+@description File with all code related to the Pool library.
+@file Pool.cpp
+
+@authors João Tavares nº21871, Diogo Silva nº22369, Ademar Valente nº23155, José lourenço nº23496
+@date 19/05/2024
 */
 
 
-#pragma region importações
+#pragma region importations
 
 #pragma comment(lib, "glew32s.lib")
 #pragma comment(lib, "glfw3.lib")
@@ -29,10 +32,10 @@
 #include <glm\gtc\matrix_inverse.hpp>
 
 #define TINYOBJLOADER_IMPLEMENTATION
-#include "thirdParty/TinyObjLoader.h"
+#include "auxLibraries/TinyObjLoader.h"
 
 #define STB_IMAGE_IMPLEMENTATION
-#include "thirdParty/StbImage.h"
+#include "auxLibraries/StbImage.h"
 
 #include "Shaders.h"
 #include "Pool.h"
@@ -43,7 +46,7 @@
 
 namespace Pool {
 
-#pragma region variáveis globais
+#pragma region global variables
 
 	GLuint _programShader;
 	glm::mat4 _modelMatrix;
@@ -54,7 +57,7 @@ namespace Pool {
 #pragma endregion
 
 
-#pragma region funções globais da biblioteca Pool
+#pragma region Pool library global functions
 
 	void bindProgramShader(GLuint* programShader) {
 		// vincula o programa shader ao contexto OpenGL atual
@@ -104,7 +107,7 @@ namespace Pool {
 #pragma endregion
 
 
-#pragma region funções getters e setters da classe RendererBall
+#pragma region RendererBall class getters and setters functions
 
 	// getters
 	const std::vector<float>& RendererBall::getVertices() const {   // retorna apontador para ser mais eficiente ao renderizar
@@ -139,7 +142,7 @@ namespace Pool {
 #pragma endregion
 
 
-#pragma region construtor e destrutor da classe RendererBall
+#pragma region RendererBall class constructors and destructors
 
 	// construtor
 	RendererBall::RendererBall(void) {
@@ -164,7 +167,7 @@ namespace Pool {
 #pragma endregion
 
 
-#pragma region funções principais da classe RendererBall
+#pragma region RendererBall class main functions
 
 	void RendererBall::Load(const std::string obj_model_filepath) {
 		_objFilepath = obj_model_filepath.c_str();
@@ -278,7 +281,7 @@ namespace Pool {
 #pragma endregion
 
 
-#pragma region funções secundárias da classe RendererBall
+#pragma region RendererBall class auxiliary functions
 
 	std::vector<float>* RendererBall::load3dModel(const char* objFilepath) {
 		std::vector<float>* vertices = new 	std::vector<float>;
@@ -354,7 +357,7 @@ namespace Pool {
 
 		// se houve erros ao carregar o ficheiro .mtl
 		if (!mtlFile) {
-			std::cerr << "Erro ao carregar ficheiro .mtl." << std::endl;
+			std::cerr << "Error loading file .mtl." << std::endl;
 			return {};
 		}
 
@@ -423,7 +426,7 @@ namespace Pool {
 
 		// se houve erros ao abrir o ficheiro
 		if (!image) {
-			std::cerr << "Erro ao abrir o ficheiro '" << fullPath.c_str() << "'." << std::endl;
+			std::cerr << "Error opening file '" << fullPath.c_str() << "'." << std::endl;
 			return {};
 		}
 

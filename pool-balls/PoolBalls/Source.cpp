@@ -1,17 +1,20 @@
 ﻿/*
- * @descrição	Ficheiro principal da aplicação, com o ponto de entrada e, as variáveis e funções gerais da aplicação.
- * @ficheiro	Source.cpp
- * @autor(s)	Henrique Azevedo a23488, Luís Pereira a18446, Pedro Silva a20721, Vânia Pereira a19264
- * @data		11/06/2023
- *
- * -------------------------------------
- *
- * Proposta de software para a renderização de um cenário 3D, com a parecença de uma mesa de bilhar e suas bolas,
- * aplicando texturas e iluminação, e realizar animação de uma das bolas.
+@3D Programming
+
+@description Main file of the application, with the entry point and general variables and functions of the application.
+@file Source.cpp
+
+@authors João Tavares nº21871, Diogo Silva nº22369, Ademar Valente nº23155, José lourenço nº23496
+@date 19/05/2024
+
+-------------------------------------
+
+Software proposal for rendering a 3D scenario resembling a billiard table and its balls,
+applying textures and lighting, and animating one of the balls.
 */
 
 
-#pragma region importações
+#pragma region importations
 
 #pragma comment(lib, "glew32s.lib")
 #pragma comment(lib, "glfw3.lib")
@@ -40,7 +43,7 @@
 #pragma endregion
 
 
-#pragma region variáveis globais
+#pragma region global variables
 
 // mesa
 const GLuint _numberOfTableVertices = 36;
@@ -69,7 +72,7 @@ bool _animationFinished = false;
 #pragma endregion
 
 
-#pragma region ponto de entrada do programa
+#pragma region program entry point
 
 int main()
 {
@@ -84,7 +87,7 @@ int main()
 	// cria janela
 	GLFWwindow* window = glfwCreateWindow(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_NAME, NULL, NULL);
 	if (window == nullptr) {
-		std::cout << "Erro ao inicializar a biblioteca GLFW" << std::endl;
+		std::cout << "Error initializing GLFW Library" << std::endl;
 		glfwTerminate();
 		return -1;
 	}
@@ -95,7 +98,7 @@ int main()
 	// inicializa a glew
 	glewExperimental = GL_TRUE;
 	if (glewInit() != GLEW_OK) {
-		std::cout << "Erro ao inicializar a biblioteca GLEW" << std::endl;
+		std::cout << "Error initializing GLEW Library" << std::endl;
 		glfwTerminate();
 		return -1;
 	}
@@ -134,7 +137,7 @@ int main()
 #pragma endregion
 
 
-#pragma region funções do programa
+#pragma region program functions
 
 void init(void) {
 	// -----------------------------------------------------------
@@ -383,7 +386,7 @@ void init(void) {
 
 	// se houve erros ao carregar shaders
 	if (!Pool::_programShader) {
-		std::cout << "Erro ao carregar shaders: " << std::endl;
+		std::cout << "Error loading shaders: " << std::endl;
 		exit(EXIT_FAILURE);
 	}
 
@@ -498,7 +501,7 @@ void display(void) {
 		if (isColliding()) {
 			_animationStarted = false;
 			_animationFinished = true;
-			std::cout << "Colidiu com a bola ou a mesa." << std::endl;
+			std::cout << "Collision detected." << std::endl;
 		}
 	}
 }
@@ -564,7 +567,7 @@ bool isColliding(void) {
 #pragma endregion
 
 
-#pragma region funções de callbacks para a biblioteca glfw
+#pragma region glfw library callback functions
 
 void printErrorCallback(int code, const char* description) {
 	std::cout << description << std::endl;
@@ -635,35 +638,35 @@ void charCallback(GLFWwindow* window, unsigned int codepoint)
 	case '1':
 		lightModel = 1;
 		glProgramUniform1i(Pool::_programShader, glGetProgramResourceLocation(Pool::_programShader, GL_UNIFORM, "lightModel"), lightModel);
-		std::cout << "Luz ambiente ativada." << std::endl;
+		std::cout << "Ambient light activated." << std::endl;
 		break;
 
 	case '2':
 		lightModel = 2;
 		glProgramUniform1i(Pool::_programShader, glGetProgramResourceLocation(Pool::_programShader, GL_UNIFORM, "lightModel"), lightModel);
-		std::cout << "Luz direcional ativada." << std::endl;
+		std::cout << "Directional light activated." << std::endl;
 		break;
 
 	case '3':
 		lightModel = 3;
 		glProgramUniform1i(Pool::_programShader, glGetProgramResourceLocation(Pool::_programShader, GL_UNIFORM, "lightModel"), lightModel);
-		std::cout << "Luz pontual ativada." << std::endl;
+		std::cout << "Point light activated." << std::endl;
 		break;
 
 	case '4':
 		lightModel = 4;
 		glProgramUniform1i(Pool::_programShader, glGetProgramResourceLocation(Pool::_programShader, GL_UNIFORM, "lightModel"), lightModel);
-		std::cout << "Luz conica ativada." << std::endl;
+		std::cout << "Spot light activated." << std::endl;
 		break;
 
 	case GLFW_KEY_SPACE:
 		// não permite voltar a iniciar animação, depois de iniciar uma vez e terminar
 		if (!_animationFinished) {
 			_animationStarted = true;
-			std::cout << "Animacao da bola iniciada." << std::endl;
+			std::cout << "Ball animation started." << std::endl;
 		}
 		else {
-			std::cout << "Animacao da bola encerrada." << std::endl;
+			std::cout << "Ball animation ended." << std::endl;
 		}
 
 		break;

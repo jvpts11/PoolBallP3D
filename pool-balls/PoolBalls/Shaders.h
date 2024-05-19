@@ -1,8 +1,11 @@
 /*
- * @descrição	Ficheiro com todas as assinaturas relativas ao carregamento de shaders.
- * @ficheiro	Shaders.h
- * @autor(s)	Henrique Azevedo a23488, Luís Pereira a18446, Pedro Silva a20721, Vânia Pereira a19264
- * @data		11/06/2023
+@3D Programming
+
+@description File with all signatures related to shader loading.
+@file Shaders.h
+
+@authors João Tavares nº21871, Diogo Silva nº22369, Ademar Valente nº23155, José lourenço nº23496
+@date 19/05/2024
 */
 
 
@@ -11,14 +14,14 @@
 #ifndef LOAD_SHADERS_H
 #define LOAD_SHADERS_H 1
 
-#pragma region importações
+#pragma region importations
 
 #include <GL\gl.h>
 
 #pragma endregion
 
 
-#pragma region estruturas
+#pragma region structures
 
 typedef struct {
 	GLenum type;
@@ -29,7 +32,7 @@ typedef struct {
 #pragma endregion
 
 
-#pragma region funções
+#pragma region functions
 
 static const GLchar* readShader(const char* filename);
 GLuint loadShaders(ShaderInfo* shaders);

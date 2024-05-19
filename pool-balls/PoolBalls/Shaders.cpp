@@ -1,12 +1,15 @@
 ﻿/*
- * @descrição	Ficheiro com todo o código relativo ao carregamento de shaders.
- * @ficheiro	Shaders.cpp
- * @autor(s)	Henrique Azevedo a23488, Luís Pereira a18446, Pedro Silva a20721, Vânia Pereira a19264
- * @data		11/06/2023
+@3D Programming
+
+@description File with all code related to shader loading.
+@file Shaders.cpp
+
+@authors João Tavares nº21871, Diogo Silva nº22369, Ademar Valente nº23155, José lourenço nº23496
+@date 19/05/2024
 */
 
 
-#pragma region importações
+#pragma region importations
 
 #include <iostream>
 #include <fstream>
@@ -24,7 +27,7 @@
 #pragma endregion
 
 
-#pragma region funções
+#pragma region functions
 
 static const GLchar* readShader(const char* filename) {
 	// abre o ficheiro em modo binário e coloca-se na última posição do ficheiro
@@ -32,7 +35,7 @@ static const GLchar* readShader(const char* filename) {
 
 	// se houve erros ao abrir o ficheiro
 	if (!ficheiro.is_open()) {
-		std::cerr << "Erro ao abrir o ficheiro '" << filename << "'" << std::endl;
+		std::cerr << "Error opening file '" << filename << "'" << std::endl;
 		return nullptr;
 	}
 
@@ -110,7 +113,7 @@ GLuint loadShaders(ShaderInfo* shaders) {
 			// texto da mensagem do log
 			GLchar* log = new GLchar[length + 1];
 			glGetShaderInfoLog(shaders[i].shader, length, &length, log);
-			std::cerr << "Erro ao compilar shaders: " << log << std::endl;
+			std::cerr << "Error compiling shaders: " << log << std::endl;
 			delete[] log;
 
 			// destroi os shaders criados
@@ -146,7 +149,7 @@ GLuint loadShaders(ShaderInfo* shaders) {
 		// texto da mensagem do log
 		GLchar* log = new GLchar[length + 1];
 		glGetProgramInfoLog(program, length, &length, log);
-		std::cerr << "Erro ao linkar shaders: " << log << std::endl;
+		std::cerr << "Error linking shaders: " << log << std::endl;
 		delete[] log;
 
 		// destroi os shaders criados
