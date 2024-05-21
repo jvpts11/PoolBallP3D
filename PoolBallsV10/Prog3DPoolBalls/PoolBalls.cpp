@@ -37,7 +37,7 @@ namespace PoolBalls {
 
 #pragma region funções principais da biblioteca PoolBalls
 
-	void RendererBalls::Read(const std::string obj_model_filepath) {
+	void RendererBalls::Load(const std::string obj_model_filepath) {
 		std::vector<float> vertices;
 
 		tinyobj::attrib_t attributes;
