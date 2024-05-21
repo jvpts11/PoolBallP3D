@@ -54,6 +54,8 @@ namespace PoolBalls {
 		std::vector<Material> _ballsMaterials;
 		std::vector<Texture> _ballsTextures;
 		GLuint _programShader;
+		Material* _material;
+		Texture* _texture;
 
 	public:
 		// aceder atributos fora da classe - getters
@@ -96,8 +98,8 @@ namespace PoolBalls {
 
 		// principais
 		void Read(const std::string obj_model_filepath);
-		void Send(void);
-		void Draw(glm::vec3 position, glm::vec3 orientation);
+		void Install(void);
+		void Render(glm::vec3 position, glm::vec3 orientation);
 
 		// secundárias
 		std::vector<float> load3dModel(const char* objFilepath);
@@ -105,7 +107,7 @@ namespace PoolBalls {
 		Material loadMaterial(const char* mtlFilename);
 		Texture loadTexture(std::string imageFilename);
 		void loadLightingUniforms();
-		void loadMaterialUniforms(Material material, glm::vec3 emissive);
+		void loadMaterialUniforms(Material material, GLuint programShader);
 	};
 
 #pragma endregion

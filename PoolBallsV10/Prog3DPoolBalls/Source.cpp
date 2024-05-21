@@ -44,8 +44,8 @@ GLuint _programShader;
 // câmara
 glm::mat4 _model, _view, _projection;
 glm::mat3 _normalMatrix;
-GLfloat _angle = 0.0f;
-glm::vec3 _cameraPosition = glm::vec3(0.0f, 0.0f, 5.0f);
+GLfloat _angle = -10.0f;
+glm::vec3 _cameraPosition = glm::vec3(0.0f, 1.0f, 5.0f);
 
 // eventos do mouse
 float _lastX = 0.0f;
@@ -179,68 +179,68 @@ void init(void) {
 		// ************************************************
 		// Primeiro triângulo
 		// Posições						Cores											Coordenadas de textura
-		xCoord, -yCoord,  zCoord,		colors[0][0], colors[0][1], colors[0][2],		xTexture, yTexture,
-		xCoord, -yCoord, -zCoord,		colors[0][0], colors[0][1], colors[0][2],       xTexture, yTexture,
-		xCoord,  yCoord,  zCoord,		colors[0][0], colors[0][1], colors[0][2],       xTexture, yTexture,
-		// Segundo triângulo
-		xCoord,  yCoord,  zCoord,		colors[0][0], colors[0][1], colors[0][2],       xTexture, yTexture,
-		xCoord, -yCoord, -zCoord,		colors[0][0], colors[0][1], colors[0][2],       xTexture, yTexture,
-		xCoord,  yCoord, -zCoord,		colors[0][0], colors[0][1], colors[0][2],       xTexture, yTexture,
-		// ************************************************
-		//                       X- (face #1)
-		// ************************************************
-		// Primeiro triângulo
-		-xCoord, -yCoord, -zCoord,		colors[1][0], colors[1][1], colors[1][2],		xTexture, yTexture,
-		-xCoord, -yCoord,  zCoord,		colors[1][0], colors[1][1], colors[1][2],		xTexture, yTexture,
-		-xCoord,  yCoord, -zCoord,		colors[1][0], colors[1][1], colors[1][2],		xTexture, yTexture,
-		// Segundo triângulo
-		-xCoord,  yCoord, -zCoord,		colors[1][0], colors[1][1], colors[1][2],		xTexture, yTexture,
-		-xCoord, -yCoord,  zCoord,		colors[1][0], colors[1][1], colors[1][2],		xTexture, yTexture,
-		-xCoord,  yCoord,  zCoord,		colors[1][0], colors[1][1], colors[1][2],		xTexture, yTexture,
-		// ************************************************
-		//                       Y+ (face #2)
-		// ************************************************
-		// Primeiro triângulo
-		-xCoord, yCoord, zCoord,		colors[2][0], colors[2][1], colors[2][2],      xTexture, yTexture,
-		xCoord, yCoord, zCoord,			colors[2][0], colors[2][1], colors[2][2],      xTexture, yTexture,
-		-xCoord, yCoord, -zCoord,		colors[2][0], colors[2][1], colors[2][2],      xTexture, yTexture,
-		// Segundo triângulo
-		-xCoord, yCoord, -zCoord,		colors[2][0], colors[2][1], colors[2][2],      xTexture, yTexture,
-		xCoord, yCoord, zCoord,			colors[2][0], colors[2][1], colors[2][2],      xTexture, yTexture,
-		xCoord, yCoord, -zCoord,		colors[2][0], colors[2][1], colors[2][2],      xTexture, yTexture,
-		// ************************************************
-		//                       Y- (face #3)
-		// ************************************************
-		// Primeiro triângulo
-		-xCoord, -yCoord, -zCoord,		colors[3][0], colors[3][1], colors[3][2],		xTexture, yTexture,
-		xCoord, -yCoord, -zCoord,		colors[3][0], colors[3][1], colors[3][2],		xTexture, yTexture,
-		-xCoord, -yCoord, zCoord,		colors[3][0], colors[3][1], colors[3][2],		xTexture, yTexture,
-		// Segundo triângulo
-		-xCoord, -yCoord, zCoord,		colors[3][0], colors[3][1], colors[3][2],		xTexture, yTexture,
-		xCoord, -yCoord, -zCoord,		colors[3][0], colors[3][1], colors[3][2],		xTexture, yTexture,
-		xCoord, -yCoord, zCoord,		colors[3][0], colors[3][1], colors[3][2],		xTexture, yTexture,
-		// ************************************************
-		//                       Z+ (face #4)
-		// ************************************************
-		// Primeiro triângulo
-		-xCoord, -yCoord, zCoord,		colors[4][0], colors[4][1], colors[4][2],      xTexture, yTexture,
-		xCoord, -yCoord, zCoord,		colors[4][0], colors[4][1], colors[4][2],      xTexture, yTexture,
-		-xCoord, yCoord, zCoord,		colors[4][0], colors[4][1], colors[4][2],      xTexture, yTexture,
-		// Segundo triângulo
-		-xCoord, yCoord, zCoord,		colors[4][0], colors[4][1], colors[4][2],      xTexture, yTexture,
-		xCoord, -yCoord, zCoord,		colors[4][0], colors[4][1], colors[4][2],      xTexture, yTexture,
-		xCoord,  yCoord, zCoord,		colors[4][0], colors[4][1], colors[4][2],      xTexture, yTexture,
-		// ************************************************
-		//                       Z- (face #5)
-		// ************************************************
-		// Primeiro triângulo
-		xCoord, -yCoord, -zCoord,		colors[5][0], colors[5][1], colors[5][2],      xTexture, yTexture,
-		-xCoord, -yCoord, -zCoord,		colors[5][0], colors[5][1], colors[5][2],      xTexture, yTexture,
-		xCoord, yCoord, -zCoord,		colors[5][0], colors[5][1], colors[5][2],      xTexture, yTexture,
-		// Segundo triângulo
-		xCoord, yCoord, -zCoord,		colors[5][0], colors[5][1], colors[5][2],      xTexture, yTexture,
-		-xCoord, -yCoord, -zCoord,		colors[5][0], colors[5][1], colors[5][2],      xTexture, yTexture,
-		-xCoord, yCoord, -zCoord,		colors[5][0], colors[5][1], colors[5][2],      xTexture, yTexture
+		xCoord, -yCoord,  zCoord,		colors[0].x, colors[0].y, colors[0].z,		xTexture, yTexture,
+		xCoord, -yCoord, -zCoord,		colors[0].x, colors[0].y, colors[0].z,       xTexture, yTexture,
+		xCoord,  yCoord,  zCoord,		colors[0].x, colors[0].y, colors[0].z,       xTexture, yTexture,
+		// Segundo triângulo					 			  			   
+		xCoord,  yCoord,  zCoord,		colors[0].x, colors[0].y, colors[0].z,       xTexture, yTexture,
+		xCoord, -yCoord, -zCoord,		colors[0].x, colors[0].y, colors[0].z,       xTexture, yTexture,
+		xCoord,  yCoord, -zCoord,		colors[0].x, colors[0].y, colors[0].z,       xTexture, yTexture,
+		// ************************************************				   
+		//                       X- (face #1)							   
+		// ************************************************				   
+		// Primeiro triângulo											   
+		-xCoord, -yCoord, -zCoord,		colors[1].x, colors[1].y, colors[1].z,		xTexture, yTexture,
+		-xCoord, -yCoord,  zCoord,		colors[1].x, colors[1].y, colors[1].z,		xTexture, yTexture,
+		-xCoord,  yCoord, -zCoord,		colors[1].x, colors[1].y, colors[1].z,		xTexture, yTexture,
+		// Segundo triângulo					 			  			   
+		-xCoord,  yCoord, -zCoord,		colors[1].x, colors[1].y, colors[1].z,		xTexture, yTexture,
+		-xCoord, -yCoord,  zCoord,		colors[1].x, colors[1].y, colors[1].z,		xTexture, yTexture,
+		-xCoord,  yCoord,  zCoord,		colors[1].x, colors[1].y, colors[1].z,		xTexture, yTexture,
+		// ************************************************				   
+		//                       Y+ (face #2)							   
+		// ************************************************				   
+		// Primeiro triângulo											   
+		-xCoord, yCoord, zCoord,		colors[2].x, colors[2].y, colors[2].z,      xTexture, yTexture,
+		xCoord, yCoord, zCoord,			colors[2].x, colors[2].y, colors[2].z,      xTexture, yTexture,
+		-xCoord, yCoord, -zCoord,		colors[2].x, colors[2].y, colors[2].z,      xTexture, yTexture,
+		// Segundo triângulo					 			  			   
+		-xCoord, yCoord, -zCoord,		colors[2].x, colors[2].y, colors[2].z,      xTexture, yTexture,
+		xCoord, yCoord, zCoord,			colors[2].x, colors[2].y, colors[2].z,      xTexture, yTexture,
+		xCoord, yCoord, -zCoord,		colors[2].x, colors[2].y, colors[2].z,      xTexture, yTexture,
+		// ************************************************				   
+		//                       Y- (face #3)							   
+		// ************************************************				   
+		// Primeiro triângulo											   
+		-xCoord, -yCoord, -zCoord,		colors[3].x, colors[3].y, colors[3].z,		xTexture, yTexture,
+		xCoord, -yCoord, -zCoord,		colors[3].x, colors[3].y, colors[3].z,		xTexture, yTexture,
+		-xCoord, -yCoord, zCoord,		colors[3].x, colors[3].y, colors[3].z,		xTexture, yTexture,
+		// Segundo triângulo					 			  			   
+		-xCoord, -yCoord, zCoord,		colors[3].x, colors[3].y, colors[3].z,		xTexture, yTexture,
+		xCoord, -yCoord, -zCoord,		colors[3].x, colors[3].y, colors[3].z,		xTexture, yTexture,
+		xCoord, -yCoord, zCoord,		colors[3].x, colors[3].y, colors[3].z,		xTexture, yTexture,
+		// ************************************************	  			   
+		//                       Z+ (face #4)				  			   
+		// ************************************************	  			   
+		// Primeiro triângulo								  			   
+		-xCoord, -yCoord, zCoord,		colors[4].x, colors[4].y, colors[4].z,      xTexture, yTexture,
+		xCoord, -yCoord, zCoord,		colors[4].x, colors[4].y, colors[4].z,      xTexture, yTexture,
+		-xCoord, yCoord, zCoord,		colors[4].x, colors[4].y, colors[4].z,      xTexture, yTexture,
+		// Segundo triângulo					 			  			   
+		-xCoord, yCoord, zCoord,		colors[4].x, colors[4].y, colors[4].z,      xTexture, yTexture,
+		xCoord, -yCoord, zCoord,		colors[4].x, colors[4].y, colors[4].z,      xTexture, yTexture,
+		xCoord,  yCoord, zCoord,		colors[4].x, colors[4].y, colors[4].z,      xTexture, yTexture,
+		// ************************************************	  			   
+		//                       Z- (face #5)				  			   
+		// ************************************************	  			   
+		// Primeiro triângulo								  			   
+		xCoord, -yCoord, -zCoord,		colors[5].x, colors[5].y, colors[5].z,      xTexture, yTexture,
+		-xCoord, -yCoord, -zCoord,		colors[5].x, colors[5].y, colors[5].z,      xTexture, yTexture,
+		xCoord, yCoord, -zCoord,		colors[5].x, colors[5].y, colors[5].z,      xTexture, yTexture,
+		// Segundo triângulo					 			  			   
+		xCoord, yCoord, -zCoord,		colors[5].x, colors[5].y, colors[5].z,      xTexture, yTexture,
+		-xCoord, -yCoord, -zCoord,		colors[5].x, colors[5].y, colors[5].z,      xTexture, yTexture,
+		-xCoord, yCoord, -zCoord,		colors[5].x, colors[5].y, colors[5].z,      xTexture, yTexture
 	};
 
 	// gera o nome para o VAO da mesa
@@ -279,7 +279,7 @@ void init(void) {
 		_rendererBalls.Read(objFilepath);
 	}
 
-	_rendererBalls.Send();
+	_rendererBalls.Install();
 
 	// cria informações dos shaders
 	ShaderInfo shaders[] = {
@@ -386,7 +386,7 @@ void display(void) {
 	material.ks = glm::vec3(1.0, 1.0, 1.0);
 	material.ns = 12.0f;
 
-	_rendererBalls.loadMaterialUniforms(material, glm::vec3(0));
+	_rendererBalls.loadMaterialUniforms(material, _programShader);
 
 	// desenha para cada bola
 	for (int i = 0; i < _rendererBalls.getNumberOfBalls(); i++) {
@@ -399,7 +399,7 @@ void display(void) {
 		// modelo de visualização do objeto
 		modelView = _view * scaledModel;
 
-		//_rendererBalls.Draw(_ballPositions[i], glm::vec3(0));
+		//_rendererBalls.Render(_ballPositions[i], glm::vec3(0));
 
 		// obtém a localização do uniform
 		modelViewId = glGetProgramResourceLocation(_programShader, GL_UNIFORM, "ModelView");
@@ -411,7 +411,7 @@ void display(void) {
 		glProgramUniform1i(_programShader, locationTexSampler1, i /*unidade de textura*/);
 		glProgramUniform1i(_programShader, renderTex, 1);
 
-		_rendererBalls.loadMaterialUniforms(_rendererBalls.getBallsMaterials()[i], glm::vec3(0.2));
+		_rendererBalls.loadMaterialUniforms(_rendererBalls.getBallsMaterials()[i], _programShader);
 
 		// desenha a bola na tela
 		glBindVertexArray(0);

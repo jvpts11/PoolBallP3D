@@ -61,11 +61,10 @@ struct SpotLight {
 uniform SpotLight spotLight;	// fonte de luz cónica
 
 struct Material {
-	vec3 emissive;
-	vec3 ambient;		// Ka
+	vec3 ambient;		// ka
 	vec3 diffuse;		// kd
-	vec3 specular;		// ke
-	float shininess;
+	vec3 specular;		// ks
+	float shininess;	// ns
 };
 
 uniform Material material;
@@ -87,8 +86,6 @@ vec4 calcSpotLight(SpotLight light);
 
 void main()
 {
-	// cálculo da componente emissiva do material
-	vec4 emissive = vec4(material.emissive, 1.0);
 
 	vec4 lightToUse;
 
