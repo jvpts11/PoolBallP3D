@@ -446,10 +446,10 @@ void display(void) {
 	if (_animationStarted) {
 		_ballPositions[animatedballIndex].x += 0.005f;
 		_ballPositions[animatedballIndex].z += 0.005f;
-
-		_ballRotations[animatedballIndex].x += 1.5f;
+		
+		_ballRotations[animatedballIndex].x += 2.0f;
 		_ballRotations[animatedballIndex].y += 2.0f;
-		_ballRotations[animatedballIndex].z -= 1.5f;
+		_ballRotations[animatedballIndex].z -= 2.0f;
 
 		if (collision()) {
 			_animationStarted = false;
