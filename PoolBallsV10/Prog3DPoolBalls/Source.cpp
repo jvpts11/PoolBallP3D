@@ -38,10 +38,6 @@ GLuint _tableVBO;
 // bolas
 PoolBalls::RendererBalls _rendererBalls(15);
 
-//float _rotationAngleX = 0.0f;  // Rotation around the X-axis
-//float _rotationAngleY = 0.0f;  // Rotation around the Y-axis
-//float _rotationAngleZ = 0.0f;  // Rotation around the Z-axis
-
 // shaders
 GLuint _programShader;
 
@@ -84,21 +80,21 @@ std::vector<glm::vec3> _ballPositions = {
 };
 
 std::vector<glm::vec3> _ballRotations = {
-		glm::vec3((static_cast <float> (rand()) / static_cast <float> (RAND_MAX)) * 360.0f), // bola 1
-		glm::vec3((static_cast <float> (rand()) / static_cast <float> (RAND_MAX)) * 360.0f), // bola 2
-		glm::vec3((static_cast <float> (rand()) / static_cast <float> (RAND_MAX)) * 360.0f), // bola 3
-		glm::vec3((static_cast <float> (rand()) / static_cast <float> (RAND_MAX)) * 360.0f), // bola 4
-		glm::vec3((static_cast <float> (rand()) / static_cast <float> (RAND_MAX)) * 360.0f), // bola 5
-		glm::vec3((static_cast <float> (rand()) / static_cast <float> (RAND_MAX)) * 360.0f), // bola 6
-		glm::vec3((static_cast <float> (rand()) / static_cast <float> (RAND_MAX)) * 360.0f), // bola 7
-		glm::vec3((static_cast <float> (rand()) / static_cast <float> (RAND_MAX)) * 360.0f), // bola 8
-		glm::vec3((static_cast <float> (rand()) / static_cast <float> (RAND_MAX)) * 360.0f), // bola 9
-		glm::vec3((static_cast <float> (rand()) / static_cast <float> (RAND_MAX)) * 360.0f), // bola 10
-		glm::vec3((static_cast <float> (rand()) / static_cast <float> (RAND_MAX)) * 360.0f), // bola 11
-		glm::vec3((static_cast <float> (rand()) / static_cast <float> (RAND_MAX)) * 360.0f), // bola 12
-		glm::vec3((static_cast <float> (rand()) / static_cast <float> (RAND_MAX)) * 360.0f), // bola 13
-		glm::vec3((static_cast <float> (rand()) / static_cast <float> (RAND_MAX)) * 360.0f), // bola 14
-		glm::vec3((static_cast <float> (rand()) / static_cast <float> (RAND_MAX)) * 360.0f), // bola 15
+		glm::vec3(0.0f), // bola 1
+		glm::vec3(0.0f), // bola 2
+		glm::vec3(0.0f), // bola 3
+		glm::vec3(0.0f), // bola 4
+		glm::vec3(0.0f), // bola 5
+		glm::vec3(0.0f), // bola 6
+		glm::vec3(0.0f), // bola 7
+		glm::vec3(0.0f), // bola 8
+		glm::vec3(0.0f), // bola 9
+		glm::vec3(0.0f), // bola 10
+		glm::vec3(0.0f), // bola 11
+		glm::vec3(0.0f), // bola 12
+		glm::vec3(0.0f), // bola 13
+		glm::vec3(0.0f), // bola 14
+		glm::vec3(0.0f), // bola 15
 };
 
 #pragma endregion
@@ -185,7 +181,7 @@ void init(void) {
 	std::vector<glm::vec3> colors{
 		glm::vec3(1.0f, 0.0f, 0.0f),	   // vermelho
 			glm::vec3(1.0f, 1.0f, 0.0f),   // amarelo
-			glm::vec3(0.0f, 1.0f, 0.0f),   // verde
+			glm::vec3(0.1f, 1.0f, 0.1f),   // verde
 			glm::vec3(0.0f, 1.0f, 1.0f),   // ciano
 			glm::vec3(0.0f, 0.0f, 1.0f),   // azul
 			glm::vec3(1.0f, 0.0f, 1.0f)	   // magenta
@@ -554,25 +550,27 @@ void charCallback(GLFWwindow* window, unsigned int codepoint)
 	{
 	case '1':
 		lightModel = 1;
+		glProgramUniform1i(_programShader, glGetProgramResourceLocation(_programShader, GL_UNIFORM, "lightModel"), lightModel);
 		std::cout << "Ambient light activated" << std::endl;
 		break;
 	case '2':
 		lightModel = 2;
+		glProgramUniform1i(_programShader, glGetProgramResourceLocation(_programShader, GL_UNIFORM, "lightModel"), lightModel);
 		std::cout << "Direction light activated." << std::endl;
 		break;
 	case '3':
 		lightModel = 3;
+		glProgramUniform1i(_programShader, glGetProgramResourceLocation(_programShader, GL_UNIFORM, "lightModel"), lightModel);
 		std::cout << "Point light activated." << std::endl;
 		break;
 	case '4':
 		lightModel = 4;
+		glProgramUniform1i(_programShader, glGetProgramResourceLocation(_programShader, GL_UNIFORM, "lightModel"), lightModel);
 		std::cout << "Spot light activated." << std::endl;
 		break;
 	default:
 		break;
 	}
-
-	glProgramUniform1i(_programShader, glGetProgramResourceLocation(_programShader, GL_UNIFORM, "lightModel"), lightModel);
 }
 
 #pragma endregion

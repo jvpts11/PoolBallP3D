@@ -341,13 +341,13 @@ namespace PoolBalls {
 		glProgramUniform3fv(_programShader, glGetProgramResourceLocation(_programShader, GL_UNIFORM, "ambientLight.ambient"), 1, glm::value_ptr(glm::vec3(7.0f)));
 
 		// fonte de luz direcional
-		glProgramUniform3fv(_programShader, glGetProgramResourceLocation(_programShader, GL_UNIFORM, "directionalLight.direction"), 1, glm::value_ptr(glm::vec3(1.0f, 0.0f, 0.0f)));
+		glProgramUniform3fv(_programShader, glGetProgramResourceLocation(_programShader, GL_UNIFORM, "directionalLight.direction"), 1, glm::value_ptr(glm::vec3(0.5f, -0.5f, 0.0f)));
 		glProgramUniform3fv(_programShader, glGetProgramResourceLocation(_programShader, GL_UNIFORM, "directionalLight.ambient"), 1, glm::value_ptr(glm::vec3(4.0f)));
 		glProgramUniform3fv(_programShader, glGetProgramResourceLocation(_programShader, GL_UNIFORM, "directionalLight.diffuse"), 1, glm::value_ptr(glm::vec3(2.0f)));
 		glProgramUniform3fv(_programShader, glGetProgramResourceLocation(_programShader, GL_UNIFORM, "directionalLight.specular"), 1, glm::value_ptr(glm::vec3(1.0f)));
 
 		// fonte de luz pontual 
-		glProgramUniform3fv(_programShader, glGetProgramResourceLocation(_programShader, GL_UNIFORM, "pointLight.position"), 1, glm::value_ptr(glm::vec3(1.0f, 0.0f, 0.0f)));
+		glProgramUniform3fv(_programShader, glGetProgramResourceLocation(_programShader, GL_UNIFORM, "pointLight.position"), 1, glm::value_ptr(glm::vec3(1.0f, 1.0f, 0.0f)));
 		glProgramUniform3fv(_programShader, glGetProgramResourceLocation(_programShader, GL_UNIFORM, "pointLight.ambient"), 1, glm::value_ptr(glm::vec3(0.6f)));
 		glProgramUniform3fv(_programShader, glGetProgramResourceLocation(_programShader, GL_UNIFORM, "pointLight.diffuse"), 1, glm::value_ptr(glm::vec3(2.0f)));
 		glProgramUniform3fv(_programShader, glGetProgramResourceLocation(_programShader, GL_UNIFORM, "pointLight.specular"), 1, glm::value_ptr(glm::vec3(1.0f)));
@@ -364,8 +364,8 @@ namespace PoolBalls {
 		glProgramUniform1f(_programShader, glGetProgramResourceLocation(_programShader, GL_UNIFORM, "spotLight.constant"), 1.0f);
 		glProgramUniform1f(_programShader, glGetProgramResourceLocation(_programShader, GL_UNIFORM, "spotLight.linear"), 0.09f);
 		glProgramUniform1f(_programShader, glGetProgramResourceLocation(_programShader, GL_UNIFORM, "spotLight.quadratic"), 0.032f);
-		glProgramUniform1f(_programShader, glGetProgramResourceLocation(_programShader, GL_UNIFORM, "spotLight.cutoff"), glm::cos(glm::radians(25.0f)));
-		glProgramUniform1f(_programShader, glGetProgramResourceLocation(_programShader, GL_UNIFORM, "spotLight.outerCutOff"), glm::cos(glm::radians(35.0f)));
+		glProgramUniform1f(_programShader, glGetProgramResourceLocation(_programShader, GL_UNIFORM, "spotLight.cutoff"), glm::cos(glm::radians(15.0f)));
+		glProgramUniform1f(_programShader, glGetProgramResourceLocation(_programShader, GL_UNIFORM, "spotLight.outerCutOff"), glm::cos(glm::radians(20.0f)));
 
 		glProgramUniform1i(_programShader, glGetProgramResourceLocation(_programShader, GL_UNIFORM, "lightModel"), 1);
 	}
