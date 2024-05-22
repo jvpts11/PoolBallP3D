@@ -37,6 +37,8 @@ namespace PoolBalls {
 
 #pragma region funções principais da biblioteca PoolBalls
 
+	//Esta função tem como objetivo carregar para a memória do CPU os dados do ficheiro .obj, cujo caminho é passado como argumento.
+	//Deverá ainda carregar para a memória do CPU os materiais e texturas associados ao modelo.
 	void RendererBalls::Load(const std::string obj_model_filepath) {
 		std::vector<float> vertices;
 
@@ -95,6 +97,7 @@ namespace PoolBalls {
 		_ballsTextures.push_back(loadTexture(textureFilename));
 	}
 
+	//Gera os VAO e VBO necessários e envia os dados do modelo (vértices, coordenadas de textura e normais) para a memória do GPU.
 	void RendererBalls::Install(void) {
 		// gera nomes para os VAOs das bolas
 		glGenVertexArrays(_numberOfBalls, _ballsVAOs);
@@ -157,6 +160,7 @@ namespace PoolBalls {
 		}
 	}
 
+	//Função para renderizar o modelo na posição definida por position e orientação definida por orientation.
 	void RendererBalls::Render(glm::vec3 position, glm::vec3 orientation) {
 		Material* material = _material;
 		loadMaterialUniforms(*material, _programShader);

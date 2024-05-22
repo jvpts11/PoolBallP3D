@@ -66,21 +66,21 @@ int animatedballIndex = 4;	//bola 5
 
 // posições das bolas
 std::vector<glm::vec3> _ballPositions = {
-	glm::vec3((static_cast <float> (rand()) / static_cast <float> (RAND_MAX)) * 3.7f - 1.85f, 0.33f, (static_cast <float> (rand()) / static_cast <float> (RAND_MAX)) * 2.2f - 1.1f),		// bola 1
-	glm::vec3((static_cast <float> (rand()) / static_cast <float> (RAND_MAX)) * 3.7f - 1.85f, 0.33f, (static_cast <float> (rand()) / static_cast <float> (RAND_MAX)) * 2.2f - 1.1f),		// bola 1
-	glm::vec3((static_cast <float> (rand()) / static_cast <float> (RAND_MAX)) * 3.7f - 1.85f, 0.33f, (static_cast <float> (rand()) / static_cast <float> (RAND_MAX)) * 2.2f - 1.1f),		// bola 1
-	glm::vec3((static_cast <float> (rand()) / static_cast <float> (RAND_MAX)) * 3.7f - 1.85f, 0.33f, (static_cast <float> (rand()) / static_cast <float> (RAND_MAX)) * 2.2f - 1.1f),		// bola 1
-	glm::vec3(0.1f, 0.33f, -0.1f),		// bola 5
-	glm::vec3((static_cast <float> (rand()) / static_cast <float> (RAND_MAX)) * 3.7f - 1.85f, 0.33f, (static_cast <float> (rand()) / static_cast <float> (RAND_MAX)) * 2.2f - 1.1f),		// bola 1
-	glm::vec3((static_cast <float> (rand()) / static_cast <float> (RAND_MAX)) * 3.7f - 1.85f, 0.33f, (static_cast <float> (rand()) / static_cast <float> (RAND_MAX)) * 2.2f - 1.1f),		// bola 1
-	glm::vec3((static_cast <float> (rand()) / static_cast <float> (RAND_MAX)) * 3.7f - 1.85f, 0.33f, (static_cast <float> (rand()) / static_cast <float> (RAND_MAX)) * 2.2f - 1.1f),		// bola 1
-	glm::vec3((static_cast <float> (rand()) / static_cast <float> (RAND_MAX)) * 3.7f - 1.85f, 0.33f, (static_cast <float> (rand()) / static_cast <float> (RAND_MAX)) * 2.2f - 1.1f),		// bola 1
-	glm::vec3((static_cast <float> (rand()) / static_cast <float> (RAND_MAX)) * 3.7f - 1.85f, 0.33f, (static_cast <float> (rand()) / static_cast <float> (RAND_MAX)) * 2.2f - 1.1f),		// bola 1
-	glm::vec3((static_cast <float> (rand()) / static_cast <float> (RAND_MAX)) * 3.7f - 1.85f, 0.33f, (static_cast <float> (rand()) / static_cast <float> (RAND_MAX)) * 2.2f - 1.1f),		// bola 1
-	glm::vec3(0.7f, 0.33f, 0.5f),		// bola 12
-	glm::vec3((static_cast <float> (rand()) / static_cast <float> (RAND_MAX)) * 3.7f - 1.85f, 0.33f, (static_cast <float> (rand()) / static_cast <float> (RAND_MAX)) * 2.2f - 1.1f),		// bola 1
-	glm::vec3((static_cast <float> (rand()) / static_cast <float> (RAND_MAX)) * 3.7f - 1.85f, 0.33f, (static_cast <float> (rand()) / static_cast <float> (RAND_MAX)) * 2.2f - 1.1f),		// bola 1
-	glm::vec3((static_cast <float> (rand()) / static_cast <float> (RAND_MAX)) * 3.7f - 1.85f, 0.33f, (static_cast <float> (rand()) / static_cast <float> (RAND_MAX)) * 2.2f - 1.1f),		// bola 1
+		glm::vec3((static_cast <float> (rand()) / static_cast <float> (RAND_MAX)) * 3.7f - 1.85f, 0.33f, (static_cast <float> (rand()) / static_cast <float> (RAND_MAX)) * 2.2f - 1.1f),		// bola 1
+		glm::vec3((static_cast <float> (rand()) / static_cast <float> (RAND_MAX)) * 3.7f - 1.85f, 0.33f, (static_cast <float> (rand()) / static_cast <float> (RAND_MAX)) * 2.2f - 1.1f),		// bola 1
+		glm::vec3((static_cast <float> (rand()) / static_cast <float> (RAND_MAX)) * 3.7f - 1.85f, 0.33f, (static_cast <float> (rand()) / static_cast <float> (RAND_MAX)) * 2.2f - 1.1f),		// bola 1
+		glm::vec3((static_cast <float> (rand()) / static_cast <float> (RAND_MAX)) * 3.7f - 1.85f, 0.33f, (static_cast <float> (rand()) / static_cast <float> (RAND_MAX)) * 2.2f - 1.1f),		// bola 1
+		glm::vec3(0.1f, 0.33f, -0.1f),		// bola 5
+		glm::vec3((static_cast <float> (rand()) / static_cast <float> (RAND_MAX)) * 3.7f - 1.85f, 0.33f, (static_cast <float> (rand()) / static_cast <float> (RAND_MAX)) * 2.2f - 1.1f),		// bola 1
+		glm::vec3((static_cast <float> (rand()) / static_cast <float> (RAND_MAX)) * 3.7f - 1.85f, 0.33f, (static_cast <float> (rand()) / static_cast <float> (RAND_MAX)) * 2.2f - 1.1f),		// bola 1
+		glm::vec3((static_cast <float> (rand()) / static_cast <float> (RAND_MAX)) * 3.7f - 1.85f, 0.33f, (static_cast <float> (rand()) / static_cast <float> (RAND_MAX)) * 2.2f - 1.1f),		// bola 1
+		glm::vec3((static_cast <float> (rand()) / static_cast <float> (RAND_MAX)) * 3.7f - 1.85f, 0.33f, (static_cast <float> (rand()) / static_cast <float> (RAND_MAX)) * 2.2f - 1.1f),		// bola 1
+		glm::vec3((static_cast <float> (rand()) / static_cast <float> (RAND_MAX)) * 3.7f - 1.85f, 0.33f, (static_cast <float> (rand()) / static_cast <float> (RAND_MAX)) * 2.2f - 1.1f),		// bola 1
+		glm::vec3((static_cast <float> (rand()) / static_cast <float> (RAND_MAX)) * 3.7f - 1.85f, 0.33f, (static_cast <float> (rand()) / static_cast <float> (RAND_MAX)) * 2.2f - 1.1f),		// bola 1
+		glm::vec3(0.7f, 0.33f, 0.5f),		// bola 12
+		glm::vec3((static_cast <float> (rand()) / static_cast <float> (RAND_MAX)) * 3.7f - 1.85f, 0.33f, (static_cast <float> (rand()) / static_cast <float> (RAND_MAX)) * 2.2f - 1.1f),		// bola 1
+		glm::vec3((static_cast <float> (rand()) / static_cast <float> (RAND_MAX)) * 3.7f - 1.85f, 0.33f, (static_cast <float> (rand()) / static_cast <float> (RAND_MAX)) * 2.2f - 1.1f),		// bola 1
+		glm::vec3((static_cast <float> (rand()) / static_cast <float> (RAND_MAX)) * 3.7f - 1.85f, 0.33f, (static_cast <float> (rand()) / static_cast <float> (RAND_MAX)) * 2.2f - 1.1f),		// bola 1
 };
 
 std::vector<glm::vec3> _ballRotations = {
@@ -446,10 +446,10 @@ void display(void) {
 	if (_animationStarted) {
 		_ballPositions[animatedballIndex].x += 0.005f;
 		_ballPositions[animatedballIndex].z += 0.005f;
-
-		_ballRotations[animatedballIndex].x += 1.5f;
+		
+		_ballRotations[animatedballIndex].x += 2.0f;
 		_ballRotations[animatedballIndex].y += 2.0f;
-		_ballRotations[animatedballIndex].z -= 1.5f;
+		_ballRotations[animatedballIndex].z -= 2.0f;
 
 		if (collision()) {
 			_animationStarted = false;
