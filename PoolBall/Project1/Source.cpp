@@ -1,3 +1,6 @@
+
+#pragma region imports
+
 #define GLEW_STATIC
 #include <GL\glew.h>
 #include <GLFW\glfw3.h>
@@ -8,12 +11,14 @@
 #pragma comment(lib, "opengl32.lib")
 
 #include <windows.h>
-extern "C" {
-	__declspec(dllexport) DWORD NvOptimusEnablement = 0x00000001;
-}
+
+#pragma endregion
+
 
 int main(void) {
 	GLFWwindow* window;
+
+	glfwSetErrorCallback(errorCallback);
 
 	if (!glfwInit()) return -1;
 
@@ -36,4 +41,8 @@ int main(void) {
 
 	glfwTerminate();
 	return 0;
+}
+
+void errorCallback(int code, const char* description) {
+	std::cout << description << std::endl;
 }
