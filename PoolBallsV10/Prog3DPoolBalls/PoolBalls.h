@@ -47,6 +47,9 @@ namespace PoolBalls {
 	class RendererBalls {
 	private:
 		// atributos
+		glm::vec3 _position;
+		glm::vec3 _rotation;
+
 		const GLuint _numberOfBalls;
 		std::vector<std::vector<float>> _ballsVertices;
 		GLuint* _ballsVAOs;
