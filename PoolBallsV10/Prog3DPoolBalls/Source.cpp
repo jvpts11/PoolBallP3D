@@ -38,6 +38,10 @@ GLuint _tableVBO;
 // bolas
 PoolBalls::RendererBalls _rendererBalls(15);
 
+//float _rotationAngleX = 0.0f;  // Rotation around the X-axis
+//float _rotationAngleY = 0.0f;  // Rotation around the Y-axis
+//float _rotationAngleZ = 0.0f;  // Rotation around the Z-axis
+
 // shaders
 GLuint _programShader;
 
@@ -54,7 +58,7 @@ bool _firstMouse = true;
 
 float _zoomLevel = 1.0f;
 float _minZoom = 0.1f;
-float _maxZoom = 10.0f;
+float _maxZoom = 3.5f;
 float _zoomSpeed = 0.1f;
 bool _animationStarted = false;
 
@@ -276,7 +280,7 @@ void init(void) {
 	// carrega o modelo, material e textura de cada bola
 	for (int i = 1; i <= _rendererBalls.getNumberOfBalls(); i++) {
 		std::string objFilepath = "textures/Ball" + std::to_string(i) + ".obj";
-		_rendererBalls.Read(objFilepath);
+		_rendererBalls.Load(objFilepath);
 	}
 
 	_rendererBalls.Install();
@@ -393,6 +397,12 @@ void display(void) {
 		// translação da bola
 		translatedModel = glm::translate(_model, _ballPositions[i]);
 
+		// rotação da bola
+		/*glm::mat4 rotationX = glm::rotate(translatedModel, glm::radians(_rotationAngleX), glm::vec3(1.0f, 0.0f, 0.0f));
+		glm::mat4 rotationY = glm::rotate(rotationX, glm::radians(_rotationAngleY), glm::vec3(0.0f, 1.0f, 0.0f));
+		glm::mat4 rotationZ = glm::rotate(rotationY, glm::radians(_rotationAngleZ), glm::vec3(0.0f, 0.0f, 1.0f));*/
+
+
 		// escala de cada bola
 		glm::mat4 scaledModel = glm::scale(translatedModel, glm::vec3(0.08f));
 
@@ -461,19 +471,19 @@ void printErrorCallback(int code, const char* description) {
 	std::cout << description << std::endl;
 }
 
-void scrollCallback(GLFWwindow* window, double xoffset, double yoffset)
+void scrollCallback(GLFWwindow* window, double xOffset, double yOffset)
 {
-	// Convert the mouse position to normalized device coordinates (NDC)
-	int width, height;
-	glfwGetWindowSize(window, &width, &height);
+	if (yOffset > 0)
+		_zoomLevel -= _zoomSpeed;
+	else
+		_zoomLevel += _zoomSpeed;
 
-	// Calculate the zoom factor based on the scroll offset
-	float zoomFactor = 1.0f + static_cast<float>(yoffset) * _zoomSpeed;
+	_zoomLevel = glm::clamp(_zoomLevel, _minZoom, _maxZoom);
 
-	_view = glm::scale(_view, glm::vec3(zoomFactor, zoomFactor, 1.0f));
+	_projection = glm::perspective(glm::radians(45.0f) * _zoomLevel, 4.0f / 3.0f, 0.1f, 100.0f);
 
-	_zoomLevel += yoffset * _zoomSpeed;
-	_zoomLevel = std::max(_minZoom, std::min(_maxZoom, _zoomLevel));
+	GLint projectionId = glGetProgramResourceLocation(_programShader, GL_UNIFORM, "Projection");
+	glProgramUniformMatrix4fv(_programShader, projectionId, 1, GL_FALSE, glm::value_ptr(_projection));
 }
 
 void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods) {
@@ -537,7 +547,7 @@ void charCallback(GLFWwindow* window, unsigned int codepoint)
 		break;
 	case '4':
 		lightModel = 4;
-		std::cout << "Luz cónica ativada." << std::endl;
+		std::cout << "Luz conica ativada." << std::endl;
 		break;
 	default:
 		lightModel = 1;

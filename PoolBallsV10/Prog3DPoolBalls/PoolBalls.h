@@ -97,7 +97,7 @@ namespace PoolBalls {
 		}
 
 		// principais
-		void Read(const std::string obj_model_filepath);
+		void Load(const std::string obj_model_filepath);
 		void Install(void);
 		void Render(glm::vec3 position, glm::vec3 orientation);
 
