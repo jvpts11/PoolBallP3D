@@ -31,7 +31,7 @@
 
 // mesa
 const GLuint _numberOfTableVertices = 36;
-GLfloat _tableVertices[_numberOfTableVertices * 8];
+//GLfloat _tableVertices[_numberOfTableVertices * 8];
 GLuint _tableVAO;
 GLuint _tableVBO;
 
@@ -374,6 +374,7 @@ void init(void) {
 void display(void) {
 	// limpa o buffer de cor e de profundidade
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 
 	// translação da mesa
 	glm::mat4 translatedModel = glm::translate(_model, glm::vec3(0.0f, 0.0f, 0.0f));
@@ -390,13 +391,13 @@ void display(void) {
 	GLint renderTex = glGetProgramResourceLocation(_programShader, GL_UNIFORM, "renderTex");
 	glProgramUniform1i(_programShader, renderTex, 0);
 
-	GLint viewPositionLoc = glGetUniformLocation(_programShader, "viewPosition");
-	glUniform3f(viewPositionLoc, _cameraPosition.x, _cameraPosition.y, _cameraPosition.z);
+	//GLint viewPositionLoc = glGetUniformLocation(_programShader, "viewPosition");
+	//glUniform3f(viewPositionLoc, _cameraPosition.x, _cameraPosition.y, _cameraPosition.z);
 
 	// desenha a mesa na tela
 	glBindVertexArray(_tableVAO);
 	glDrawArrays(GL_TRIANGLES, 0, _numberOfTableVertices);
-
+	glBindVertexArray(0);
 	
 
 	PoolBalls::Material material;

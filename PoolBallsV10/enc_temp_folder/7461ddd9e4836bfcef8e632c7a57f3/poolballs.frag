@@ -203,7 +203,12 @@ vec4 calcSpotLight(SpotLight light) {
     
 	// Attenuation
 	float distance    = length(mat3(View) * light.position - fragPos);
-	float attenuation = 1.0f / (light.constant + light.linear * distance + light.quadratic * (distance * distance));
+	float attenuation = 1.0 / (light.constant + light.linear * distance + light.quadratic * (distance * distance));
+//	ambient  *= attenuation;
+//	diffuse  *= attenuation;
+//	specular *= attenuation;
     
 	return (attenuation * (ambient + diffuse + specular));
+//    return vec4(ambient + diffuse + specular, 1.0f);
+	
 }
