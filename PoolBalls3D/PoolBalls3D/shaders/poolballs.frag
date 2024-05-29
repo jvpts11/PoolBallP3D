@@ -83,6 +83,7 @@ vec4 calcAmbientLight(AmbientLight light);
 vec4 calcDirectionalLight(DirectionalLight light);
 vec4 calcPointLight(PointLight light);
 vec4 calcSpotLight(SpotLight light);
+vec4 calcNoLight();
 
 void main()
 {
@@ -95,8 +96,10 @@ void main()
 		lightToUse = calcPointLight(pointLight);
 	} else if (lightModel == 4) {
 		lightToUse = calcSpotLight(spotLight);
-	}  else {
+	}  else if(lightModel == 1) {
 		lightToUse = calcAmbientLight(ambientLight);
+	} else {
+		lightToUse = calcNoLight();
 	}
 
 	if (renderTex == 1) {
@@ -206,4 +209,8 @@ vec4 calcSpotLight(SpotLight light) {
     float attenuation = 1.0f / (light.constant + light.linear * distance + light.quadratic * (distance * distance));
 
     return (attenuation * (ambient + diffuse + specular));
+}
+
+vec4 calcNoLight() {
+	return vec4(0.0, 0.0, 0.0, 1.0);
 }
