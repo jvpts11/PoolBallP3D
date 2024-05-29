@@ -60,24 +60,39 @@ bool _animationStarted = false;
 
 int animatedballIndex = 4;	//bola 5
 
-// posições das bolas
-std::vector<glm::vec3> _ballPositions = {
-		glm::vec3((static_cast <float> (rand()) / static_cast <float> (RAND_MAX)) * 3.7f - 1.85f, 0.33f, (static_cast <float> (rand()) / static_cast <float> (RAND_MAX)) * 2.2f - 1.1f),		// bola 1
-		glm::vec3((static_cast <float> (rand()) / static_cast <float> (RAND_MAX)) * 3.7f - 1.85f, 0.33f, (static_cast <float> (rand()) / static_cast <float> (RAND_MAX)) * 2.2f - 1.1f),		// bola 1
-		glm::vec3((static_cast <float> (rand()) / static_cast <float> (RAND_MAX)) * 3.7f - 1.85f, 0.33f, (static_cast <float> (rand()) / static_cast <float> (RAND_MAX)) * 2.2f - 1.1f),		// bola 1
-		glm::vec3((static_cast <float> (rand()) / static_cast <float> (RAND_MAX)) * 3.7f - 1.85f, 0.33f, (static_cast <float> (rand()) / static_cast <float> (RAND_MAX)) * 2.2f - 1.1f),		// bola 1
-		glm::vec3(0.1f, 0.33f, -0.1f),		// bola 5
-		glm::vec3((static_cast <float> (rand()) / static_cast <float> (RAND_MAX)) * 3.7f - 1.85f, 0.33f, (static_cast <float> (rand()) / static_cast <float> (RAND_MAX)) * 2.2f - 1.1f),		// bola 1
-		glm::vec3((static_cast <float> (rand()) / static_cast <float> (RAND_MAX)) * 3.7f - 1.85f, 0.33f, (static_cast <float> (rand()) / static_cast <float> (RAND_MAX)) * 2.2f - 1.1f),		// bola 1
-		glm::vec3((static_cast <float> (rand()) / static_cast <float> (RAND_MAX)) * 3.7f - 1.85f, 0.33f, (static_cast <float> (rand()) / static_cast <float> (RAND_MAX)) * 2.2f - 1.1f),		// bola 1
-		glm::vec3((static_cast <float> (rand()) / static_cast <float> (RAND_MAX)) * 3.7f - 1.85f, 0.33f, (static_cast <float> (rand()) / static_cast <float> (RAND_MAX)) * 2.2f - 1.1f),		// bola 1
-		glm::vec3((static_cast <float> (rand()) / static_cast <float> (RAND_MAX)) * 3.7f - 1.85f, 0.33f, (static_cast <float> (rand()) / static_cast <float> (RAND_MAX)) * 2.2f - 1.1f),		// bola 1
-		glm::vec3((static_cast <float> (rand()) / static_cast <float> (RAND_MAX)) * 3.7f - 1.85f, 0.33f, (static_cast <float> (rand()) / static_cast <float> (RAND_MAX)) * 2.2f - 1.1f),		// bola 1
-		glm::vec3(0.7f, 0.33f, 0.5f),		// bola 12
-		glm::vec3((static_cast <float> (rand()) / static_cast <float> (RAND_MAX)) * 3.7f - 1.85f, 0.33f, (static_cast <float> (rand()) / static_cast <float> (RAND_MAX)) * 2.2f - 1.1f),		// bola 1
-		glm::vec3((static_cast <float> (rand()) / static_cast <float> (RAND_MAX)) * 3.7f - 1.85f, 0.33f, (static_cast <float> (rand()) / static_cast <float> (RAND_MAX)) * 2.2f - 1.1f),		// bola 1
-		glm::vec3((static_cast <float> (rand()) / static_cast <float> (RAND_MAX)) * 3.7f - 1.85f, 0.33f, (static_cast <float> (rand()) / static_cast <float> (RAND_MAX)) * 2.2f - 1.1f),		// bola 1
-};
+std::vector<glm::vec3> generateRandomBallPositions(int numBalls, float tableWidth, float tableHeight, float ballRadius) {
+	std::vector<glm::vec3> positions;
+	std::srand(static_cast<unsigned int>(std::time(0)));
+
+	auto isTouching = [&](const glm::vec3& pos, const std::vector<glm::vec3>& positions) {
+		for (const auto& existingPos : positions) {
+			if (glm::distance(pos, existingPos) < 2 * ballRadius) {
+				return true;
+			}
+		}
+		return false;
+		};
+
+	for (int i = 0; i < numBalls; ++i) {
+		glm::vec3 newPos;
+		bool validPosition = false;
+
+		while (!validPosition) {
+			newPos = glm::vec3(
+				(static_cast<float>(std::rand()) / static_cast<float>(RAND_MAX)) * tableWidth - (tableWidth / 2.0f),
+				0.33f,
+				(static_cast<float>(std::rand()) / static_cast<float>(RAND_MAX)) * tableHeight - (tableHeight / 2.0f)
+			);
+			validPosition = !isTouching(newPos, positions);
+		}
+
+		positions.push_back(newPos);
+	}
+
+	return positions;
+}
+
+std::vector<glm::vec3> _ballPositions = generateRandomBallPositions(15, 3.7, 2.2, 0.08);
 
 std::vector<glm::vec3> _ballRotations = {
 		glm::vec3(0.0f), // bola 1
@@ -444,9 +459,9 @@ void display(void) {
 		_ballPositions[animatedballIndex].x += 0.005f;
 		_ballPositions[animatedballIndex].z += 0.005f;
 		
-		_ballRotations[animatedballIndex].x += 2.0f;
-		_ballRotations[animatedballIndex].y += 2.0f;
-		_ballRotations[animatedballIndex].z -= 2.0f;
+		_ballRotations[animatedballIndex].x += 0.1f;
+		_ballRotations[animatedballIndex].y += 0.1f;
+		_ballRotations[animatedballIndex].z -= 0.1f;
 
 		if (collision()) {
 			_animationStarted = false;
@@ -469,8 +484,8 @@ bool collision() {
 	}
 
 	// Verificar colisão com os limites da mesa
-	if (_ballPositions[animatedballIndex].x + _ballRadius >= 1.3f || _ballPositions[animatedballIndex].x - _ballRadius <= -1.3f ||
-		_ballPositions[animatedballIndex].y + _ballRadius >= 2.05f || _ballPositions[animatedballIndex].y - _ballRadius <= -2.05f) {
+	if (_ballPositions[animatedballIndex].x + _ballRadius >= 4.0f / 2.0f || _ballPositions[animatedballIndex].x - _ballRadius <= -4.0f / 2.0f ||
+		_ballPositions[animatedballIndex].z + _ballRadius >= 2.5f / 2.0f || _ballPositions[animatedballIndex].z - _ballRadius <= -2.5f / 2.0f) {
 		return true; // Colisão detectada
 	}
 

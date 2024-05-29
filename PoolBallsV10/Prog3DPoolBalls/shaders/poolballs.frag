@@ -194,8 +194,7 @@ vec4 calcSpotLight(SpotLight light) {
 	float theta = dot(lightDir, normalize(-light.direction));
 	
 	
-		// Spotlight (soft edges)
-
+	// Spotlight (soft edges)
 	float epsilon = (light.cutoff - light.outerCutOff);
 	float intensity = clamp((theta - light.outerCutOff) / epsilon, 0.0, 1.0);
 	diffuse  *= intensity;
