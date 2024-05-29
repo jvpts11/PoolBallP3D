@@ -115,7 +115,7 @@ int main()
 	// cria janela
 	GLFWwindow* window = glfwCreateWindow(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_NAME, NULL, NULL);
 	if (window == nullptr) {
-		std::cout << "Erro ao inicializar a biblioteca GLFW" << std::endl;
+		std::cout << "Error inicializing GLFW library" << std::endl;
 		glfwTerminate();
 		return -1;
 	}
@@ -126,7 +126,7 @@ int main()
 	// inicializa a glew
 	glewExperimental = GL_TRUE;
 	if (glewInit() != GLEW_OK) {
-		std::cout << "Erro ao inicializar a biblioteca GLEW" << std::endl;
+		std::cout << "Error inicializing GLEW library" << std::endl;
 		glfwTerminate();
 		return -1;
 	}
@@ -184,7 +184,7 @@ void init(void) {
 			glm::vec3(0.1f, 1.0f, 0.1f),   // verde
 			glm::vec3(0.0f, 1.0f, 1.0f),   // ciano
 			glm::vec3(0.0f, 0.0f, 1.0f),   // azul
-			glm::vec3(1.0f, 0.0f, 1.0f)	   // magenta
+			glm::vec3(1.0f, 0.0f, 1.0f)	   // roxo
 	};
 
 	// coordenadas de textura da mesa
@@ -312,7 +312,7 @@ void init(void) {
 
 	// se houve erros ao carregar shaders
 	if (!_programShader) {
-		std::cout << "Erro ao carregar shaders: " << std::endl;
+		std::cout << "Error loading shaders: " << std::endl;
 		exit(EXIT_FAILURE);
 	}
 

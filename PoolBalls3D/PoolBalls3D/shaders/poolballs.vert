@@ -1,12 +1,3 @@
-/*
- * Discipline: 3D Programming
- * Subject: Pool Balls 3D Project
- * Authors: João Tavares nº 21871, Diogo Silva nº 22369, Ademar Valente nº 23155, José Lourenço nº23496
- * Date: 17/05/2024
- * File: poolballs.vert
- * Description: Vertex shader for the pool balls.
- */
-
 #version 440 core
 
 layout(location = 0) in vec3 vPosition;
@@ -32,10 +23,10 @@ void main()
     gl_Position = Projection * ModelView * vec4(vPosition, 1.0);
     color = vColors;
 
-	// vertex position in eye space
+    // Posição do vértice em coordenadas do olho.
 	vPositionEyeSpace = (ModelView * vec4(vPosition, 1.0)).xyz;
 
-	// vertex normal transformation
+	// Transformar a normal do vértice.
 	vNormalEyeSpace = normalize(NormalMatrix * vColors);
 
 	fragPos = vec3(Model * vec4(vPosition, 1.0f));
