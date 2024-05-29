@@ -69,20 +69,6 @@ namespace PoolLib
 		{
 			for (const auto& index : shape.mesh.indices)
 			{
-				// atributtes positions
-				//vertices.push_back(attrib.vertices[3 * index.vertex_index + 0]);
-				//vertices.push_back(attrib.vertices[3 * index.vertex_index + 1]);
-				//vertices.push_back(attrib.vertices[3 * index.vertex_index + 2]);
-
-				//// atributtes normals
-				//vertices.push_back(attrib.normals[3 * index.normal_index + 0]);
-				//vertices.push_back(attrib.normals[3 * index.normal_index + 1]);
-				//vertices.push_back(attrib.normals[3 * index.normal_index + 2]);
-
-				//// atributtes texture coordinates
-				//vertices.push_back(attrib.texcoords[2 * index.texcoord_index + 0]);
-				//vertices.push_back(1.0f - attrib.texcoords[2 * index.texcoord_index + 1]);
-
 				glm::vec3 position = glm::vec3(
 					attrib.vertices[3 * index.vertex_index + 0], 
 					attrib.vertices[3 * index.vertex_index + 1], 
@@ -337,6 +323,6 @@ namespace PoolLib
 		glProgramUniform1f(_shaderProgram, glGetProgramResourceLocation(_shaderProgram, GL_UNIFORM, "spotLight.cutoff"), glm::cos(glm::radians(15.0f)));
 		glProgramUniform1f(_shaderProgram, glGetProgramResourceLocation(_shaderProgram, GL_UNIFORM, "spotLight.outerCutOff"), glm::cos(glm::radians(20.0f)));
 
-		glProgramUniform1i(_shaderProgram, glGetProgramResourceLocation(_shaderProgram, GL_UNIFORM, "lightModel"), 1);
+		glProgramUniform1i(_shaderProgram, glGetProgramResourceLocation(_shaderProgram, GL_UNIFORM, "lightModel"), 0);
 	}
 }

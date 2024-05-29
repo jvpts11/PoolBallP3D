@@ -51,6 +51,13 @@ glm::vec3 _cameraPosition = glm::vec3(0.0f, 1.0f, 5.0f);
 //shader variables
 GLuint _shaderProgram;
 
+//lighting variables
+bool _ambient = false;
+bool _directional = false;
+bool _point = false;
+bool _spot = false;
+
+
 //mouse variables
 float _lastX = 0.0f;
 float _lastY = 0.0f;
@@ -478,25 +485,73 @@ void characterCallback(GLFWwindow* window, unsigned int codepoint)
 	switch (codepoint)
 	{
 	case '1':
-		lightMode = 1;
-		glProgramUniform1i(_shaderProgram, glGetUniformLocation(_shaderProgram, "lightModel"), lightMode);
-		break;
-
+		if (_ambient)
+		{
+			_ambient = false;
+			lightMode = 0;
+			glProgramUniform1i(_shaderProgram, glGetUniformLocation(_shaderProgram, "lightModel"), lightMode);
+			std::cout << "Ambient light disabled" << std::endl;
+			break;
+		}
+		else
+		{
+			_ambient = true;
+			lightMode = 1;
+			glProgramUniform1i(_shaderProgram, glGetUniformLocation(_shaderProgram, "lightModel"), lightMode);
+			std::cout << "Ambient light enabled" << std::endl;
+			break;
+		}		
 	case '2':
-		lightMode = 2;
-		glProgramUniform1i(_shaderProgram, glGetUniformLocation(_shaderProgram, "lightModel"), lightMode);
-		break;
-
+		if (_directional)
+		{
+			_directional = false;
+			lightMode = 0;
+			glProgramUniform1i(_shaderProgram, glGetUniformLocation(_shaderProgram, "lightModel"), lightMode);
+			std::cout << "Directional light disabled" << std::endl;
+			break;
+		}
+		else
+		{
+			_directional = true;
+			lightMode = 2;
+			glProgramUniform1i(_shaderProgram, glGetUniformLocation(_shaderProgram, "lightModel"), lightMode);
+			std::cout << "Directional light enabled" << std::endl;
+			break;
+		}		
 	case '3':
-		lightMode = 3;
-		glProgramUniform1i(_shaderProgram, glGetUniformLocation(_shaderProgram, "lightModel"), lightMode);
-		break;
-
+		if (_point)
+		{
+			_point = false;
+			lightMode = 0;
+			glProgramUniform1i(_shaderProgram, glGetUniformLocation(_shaderProgram, "lightModel"), lightMode);
+			std::cout << "Point light disabled" << std::endl;
+			break;
+		}
+		else
+		{
+			_point = true;
+			lightMode = 3;
+			glProgramUniform1i(_shaderProgram, glGetUniformLocation(_shaderProgram, "lightModel"), lightMode);
+			std::cout << "Point light enabled" << std::endl;
+			break;
+		}		
 	case '4':
-		lightMode = 4;
-		glProgramUniform1i(_shaderProgram, glGetUniformLocation(_shaderProgram, "lightModel"), lightMode);
-		break;
-
+		if (_spot)
+		{
+			_spot = false;
+			lightMode = 0;
+			glProgramUniform1i(_shaderProgram, glGetUniformLocation(_shaderProgram, "lightModel"), lightMode);
+			std::cout << "Spot light disabled" << std::endl;
+			break;
+		}
+		else
+		{
+			_spot = true;
+			lightMode = 4;
+			glProgramUniform1i(_shaderProgram, glGetUniformLocation(_shaderProgram, "lightModel"), lightMode);
+			std::cout << "Spot light enabled" << std::endl;
+			break;
+		}		
 	default:
 		break;
 	}
