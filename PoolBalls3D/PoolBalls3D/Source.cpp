@@ -2,12 +2,12 @@
  * Discipline: 3D Programming
  * Subject: Pool Balls 3D Project
  * Authors: João Tavares nº 21871, Diogo Silva nº 22369, Ademar Valente nº 23155, José Lourenço nº23496
- * Date: 17/05/2024
+ * Date: 31/05/2024
  * File: Source.cpp
  * Description: Main file of the project
  */
-
-#pragma region import
+//-----------------------------------------------------------------------------------------------------
+#pragma region Imports
 
 #pragma comment(lib, "glew32s.lib")
 #pragma comment(lib, "glfw3.lib")
@@ -34,69 +34,68 @@
 #include "PoolLib.h"
 
 #pragma endregion
+//-----------------------------------------------------------------------------------------------------
+#pragma region Variables
 
-#pragma region variables
-
-//table variables
+// Table variables
 const GLuint _nTableVertices = 36;
 GLuint _tableVBO;
 GLuint _tableVAO;
 
-//camera variables
-//glm::mat4 _viewMatrix, _projectionMatrix, _modelMatrix;
-//glm::mat3 _normalMatrix;
+// Camera variables
 GLfloat _angle = -10.0f;
 glm::vec3 _cameraPosition = glm::vec3(0.0f, 1.0f, 5.0f);
 
-//shader variables
+// Shader variables
 GLuint _shaderProgram;
 
-//lighting variables
+// Lighting variables
 bool _ambient = false;
 bool _directional = false;
 bool _point = false;
 bool _spot = false;
 
-
-//mouse variables
+// Mouse variables
 float _lastX = 0.0f;
 float _lastY = 0.0f;
 bool _firstMouse = true;
 
+// Zoom variables
 float _zoomLvl = 1.0f;
 float _minZoom = 0.1f;
 float _maxZoom = 3.5f;
-
 float _zoomSpeed = 0.1f;
 
-//ball variables
-int animBallIndex = 5;
+// Ball animation variables
+int animBallIndex = 5;	// Ball 6
 bool animStart = false;
 
+// Ball variables
 PoolLib::RenderBalls _balls(15);
 std::vector<glm::vec3> _ballVertices = {generateRandomBallPositions(15, 3.7, 2.2, 0.08)};
 std::vector<glm::vec3> _ballOrientations = {
-	glm::vec3(0.0f),
-	glm::vec3(0.0f),
-	glm::vec3(0.0f),
-	glm::vec3(0.0f),
-	glm::vec3(0.0f),
-	glm::vec3(0.0f),
-	glm::vec3(0.0f),
-	glm::vec3(0.0f),
-	glm::vec3(0.0f),
-	glm::vec3(0.0f),
-	glm::vec3(0.0f),
-	glm::vec3(0.0f),
-	glm::vec3(0.0f),
-	glm::vec3(0.0f),
-	glm::vec3(0.0f)
+	glm::vec3(0.0f),	// Ball 1
+	glm::vec3(0.0f),	// Ball 2
+	glm::vec3(0.0f),	// Ball 3
+	glm::vec3(0.0f),	// Ball 4
+	glm::vec3(0.0f),	// Ball 5
+	glm::vec3(0.0f),	// Ball 6
+	glm::vec3(0.0f),	// Ball 7
+	glm::vec3(0.0f),	// Ball 8
+	glm::vec3(0.0f),	// Ball 9
+	glm::vec3(0.0f),	// Ball 10
+	glm::vec3(0.0f),	// Ball 11
+	glm::vec3(0.0f),	// Ball 12	
+	glm::vec3(0.0f),	// Ball 13
+	glm::vec3(0.0f),	// Ball 14
+	glm::vec3(0.0f)		// Ball 15
 };
 
 #pragma endregion
+//-----------------------------------------------------------------------------------------------------
+#pragma region Main Function
 
-int main()
-{
+int main() {
 	// Initialize GLFW
 	if (!glfwInit())
 	{
@@ -154,8 +153,12 @@ int main()
 	glfwTerminate();
 	return 0;
 }
-void init()
-{
+
+#pragma endregion
+//-----------------------------------------------------------------------------------------------------
+#pragma region Secondary Functions
+
+void init() {
 	//table position
 	float xCoord = 2.0f;
 	float yCoord = 0.25f;
@@ -326,8 +329,8 @@ void init()
 	glEnable(GL_CULL_FACE);
 
 }
-void display()
-{
+
+void display() {
 	//clear the color buffer
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
@@ -387,8 +390,8 @@ void display()
 
 }
 
-void scrollCallback(GLFWwindow* window, double xoffset, double yoffset)
-{
+// Callback used for zooming in and out
+void scrollCallback(GLFWwindow* window, double xoffset, double yoffset) {
 	//zoom in and out
 	if (yoffset > 0)
 	{
@@ -409,8 +412,9 @@ void scrollCallback(GLFWwindow* window, double xoffset, double yoffset)
 	GLint uProjectionMatrix = glGetUniformLocation(_shaderProgram, "Projection");
 	glProgramUniformMatrix4fv(_shaderProgram, uProjectionMatrix, 1, GL_FALSE, glm::value_ptr(PoolLib::_projectionMatrix));
 }
-void mouseCallback(GLFWwindow* window, double xpos, double ypos)
-{
+
+// Callback used for camera rotation
+void mouseCallback(GLFWwindow* window, double xpos, double ypos) {
 	if (_firstMouse)
 	{
 		_lastX = xpos;
@@ -444,42 +448,17 @@ void mouseCallback(GLFWwindow* window, double xpos, double ypos)
 
 }	
 
-bool getCollision()
-{
-	float _radius = 0.08f;
-	for (int i = 0; i < _balls.getNumberOfBalls(); i++)
-	{
-		if (i != animBallIndex)
-		{
-			float distance = glm::distance(_ballVertices[i], _ballVertices[animBallIndex]);
-			if (distance <= 2 * _radius)
-			{
-				std::cout << "Collision detected with balls" << std::endl;
-				return true;
-			}
-		}
-		
-	}
-	if (_ballVertices[animBallIndex].x + _radius >= 2.05f || _ballVertices[animBallIndex].x - _radius <= -2.05f || 
-		_ballVertices[animBallIndex].z + _radius >= 1.3f || _ballVertices[animBallIndex].z - _radius <= -1.3f)
-	{
-		std::cout << "Collision detected with table" << std::endl;
-		return true;
-	}
-	return false;
-}
-
-void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods)
-{
+// Callback used for starting the ball animation
+void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods) {
 	if (key == GLFW_KEY_SPACE && action == GLFW_PRESS)
 	{
 		animStart = true;
-		std::cout << "Space pressed" << std::endl;
+		std::cout << "Space pressed." << std::endl;
 	}
 }
 
-void characterCallback(GLFWwindow* window, unsigned int codepoint)
-{
+// Callback used for enabling and disabling the different light models
+void characterCallback(GLFWwindow* window, unsigned int codepoint) {
 	int lightMode;
 
 	switch (codepoint)
@@ -490,7 +469,7 @@ void characterCallback(GLFWwindow* window, unsigned int codepoint)
 			_ambient = false;
 			lightMode = 0;
 			glProgramUniform1i(_shaderProgram, glGetUniformLocation(_shaderProgram, "lightModel"), lightMode);
-			std::cout << "Ambient light disabled" << std::endl;
+			std::cout << "Lights disabled." << std::endl;
 			break;
 		}
 		else
@@ -498,7 +477,7 @@ void characterCallback(GLFWwindow* window, unsigned int codepoint)
 			_ambient = true;
 			lightMode = 1;
 			glProgramUniform1i(_shaderProgram, glGetUniformLocation(_shaderProgram, "lightModel"), lightMode);
-			std::cout << "Ambient light enabled" << std::endl;
+			std::cout << "Ambient light enabled." << std::endl;
 			break;
 		}		
 	case '2':
@@ -507,7 +486,7 @@ void characterCallback(GLFWwindow* window, unsigned int codepoint)
 			_directional = false;
 			lightMode = 0;
 			glProgramUniform1i(_shaderProgram, glGetUniformLocation(_shaderProgram, "lightModel"), lightMode);
-			std::cout << "Directional light disabled" << std::endl;
+			std::cout << "Lights disabled." << std::endl;
 			break;
 		}
 		else
@@ -515,7 +494,7 @@ void characterCallback(GLFWwindow* window, unsigned int codepoint)
 			_directional = true;
 			lightMode = 2;
 			glProgramUniform1i(_shaderProgram, glGetUniformLocation(_shaderProgram, "lightModel"), lightMode);
-			std::cout << "Directional light enabled" << std::endl;
+			std::cout << "Directional light enabled." << std::endl;
 			break;
 		}		
 	case '3':
@@ -524,7 +503,7 @@ void characterCallback(GLFWwindow* window, unsigned int codepoint)
 			_point = false;
 			lightMode = 0;
 			glProgramUniform1i(_shaderProgram, glGetUniformLocation(_shaderProgram, "lightModel"), lightMode);
-			std::cout << "Point light disabled" << std::endl;
+			std::cout << "Lights disabled." << std::endl;
 			break;
 		}
 		else
@@ -532,7 +511,7 @@ void characterCallback(GLFWwindow* window, unsigned int codepoint)
 			_point = true;
 			lightMode = 3;
 			glProgramUniform1i(_shaderProgram, glGetUniformLocation(_shaderProgram, "lightModel"), lightMode);
-			std::cout << "Point light enabled" << std::endl;
+			std::cout << "Point light enabled." << std::endl;
 			break;
 		}		
 	case '4':
@@ -541,7 +520,7 @@ void characterCallback(GLFWwindow* window, unsigned int codepoint)
 			_spot = false;
 			lightMode = 0;
 			glProgramUniform1i(_shaderProgram, glGetUniformLocation(_shaderProgram, "lightModel"), lightMode);
-			std::cout << "Spot light disabled" << std::endl;
+			std::cout << "Lights disabled." << std::endl;
 			break;
 		}
 		else
@@ -549,13 +528,38 @@ void characterCallback(GLFWwindow* window, unsigned int codepoint)
 			_spot = true;
 			lightMode = 4;
 			glProgramUniform1i(_shaderProgram, glGetUniformLocation(_shaderProgram, "lightModel"), lightMode);
-			std::cout << "Spot light enabled" << std::endl;
+			std::cout << "Spot light enabled." << std::endl;
 			break;
 		}		
 	default:
 		break;
 	}
 }
+
+bool getCollision() {
+	float _radius = 0.08f;
+	for (int i = 0; i < _balls.getNumberOfBalls(); i++)
+	{
+		if (i != animBallIndex)
+		{
+			float distance = glm::distance(_ballVertices[i], _ballVertices[animBallIndex]);
+			if (distance <= 2 * _radius)
+			{
+				std::cout << "Collision detected with another ball." << std::endl;
+				return true;
+			}
+		}
+
+	}
+	if (_ballVertices[animBallIndex].x + _radius >= 2.05f || _ballVertices[animBallIndex].x - _radius <= -2.05f ||
+		_ballVertices[animBallIndex].z + _radius >= 1.3f || _ballVertices[animBallIndex].z - _radius <= -1.3f)
+	{
+		std::cout << "Collision detected with table edges." << std::endl;
+		return true;
+	}
+	return false;
+}
+
 std::vector<glm::vec3> generateRandomBallPositions(int numBalls, float tableWidth, float tableHeight, float ballRadius) {
 	std::vector<glm::vec3> positions;
 	std::srand(static_cast<unsigned int>(std::time(0)));
@@ -587,3 +591,5 @@ std::vector<glm::vec3> generateRandomBallPositions(int numBalls, float tableWidt
 
 	return positions;
 }
+
+#pragma endregion

@@ -1,3 +1,12 @@
+/*
+ * Discipline: 3D Programming
+ * Subject: Pool Balls 3D Project
+ * Authors: João Tavares nº 21871, Diogo Silva nº 22369, Ademar Valente nº 23155, José Lourenço nº23496
+ * Date: 31/05/2024
+ * File: poolballs.frag
+ * Description: Fragment shader used on the project
+ */
+
 #version 440 core
 
 uniform mat4 Model;
@@ -19,7 +28,6 @@ uniform AmbientLight ambientLight;	// fonte de luz ambiente global
 // estrutura de uma fonte de luz direcional
 struct DirectionalLight	{
 	vec3 direction;		// direção da luz, espaço do mundo
-	
 	vec3 ambient;		// componente de luz ambiente
 	vec3 diffuse;		// componente de luz difusa
 	vec3 specular;		// componente de luz especular
@@ -85,19 +93,17 @@ vec4 calcPointLight(PointLight light);
 vec4 calcSpotLight(SpotLight light);
 vec4 calcNoLight();
 
-void main()
-{
-
+void main() {
 	vec4 lightToUse;
 
-	if (lightModel == 2) {
+	if (lightModel == 1) { 		
+		lightToUse = calcAmbientLight(ambientLight);
+	} else if (lightModel == 2){
 		lightToUse = calcDirectionalLight(directionalLight);
 	} else if (lightModel == 3) {
 		lightToUse = calcPointLight(pointLight);
 	} else if (lightModel == 4) {
 		lightToUse = calcSpotLight(spotLight);
-	}  else if(lightModel == 1) {
-		lightToUse = calcAmbientLight(ambientLight);
 	} else {
 		lightToUse = calcNoLight();
 	}

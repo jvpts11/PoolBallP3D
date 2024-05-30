@@ -2,11 +2,11 @@
  * Discipline: 3D Programming
  * Subject: Pool Balls 3D Project
  * Authors: João Tavares nº 21871, Diogo Silva nº 22369, Ademar Valente nº 23155, José Lourenço nº23496
- * Date: 17/05/2024
+ * Date: 31/05/2024
  * File: LoadShaders.cpp
- * Description: Implementation of the LoadShaders class.
+ * Description: Implementation of the shader loading functions.
  */
-
+//-----------------------------------------------------------------------------------------------------
 #pragma region Imports
 
 #include <iostream>
@@ -18,9 +18,10 @@
 #include "loadShaders.h"
 
 #pragma endregion
+//-----------------------------------------------------------------------------------------------------
+#pragma region Functions
 
-GLuint loadShaders(shaderInfo* shaders)
-{
+GLuint loadShaders(shaderInfo* shaders) {
 	if (shaders == NULL)
 	{
 		return 0;
@@ -56,7 +57,7 @@ GLuint loadShaders(shaderInfo* shaders)
 
 			GLchar* log = new GLchar[length + 1];
 			glGetShaderInfoLog(shader, length, &length, log);
-			std::cerr << "Shader compilation failed: " << log << std::endl;
+			std::cerr << "Shader compilation failed: " << log << "." << std::endl;
 			delete[] log;
 
 			for (shaderInfo* entry = shaders; entry->type != GL_NONE; entry++)
@@ -82,7 +83,7 @@ GLuint loadShaders(shaderInfo* shaders)
 
 		GLchar* log = new GLchar[length + 1];
 		glGetProgramInfoLog(program, length, &length, log);
-		std::cerr << "Shader linking failed: " << log << std::endl;
+		std::cerr << "Shader linking failed: " << log << "." << std::endl;
 		delete[] log;
 
 		for (shaderInfo* entry = shaders; entry->type != GL_NONE; entry++)
@@ -96,12 +97,11 @@ GLuint loadShaders(shaderInfo* shaders)
 	return program;
 }
 
-static const char* readShader(const char* filename)
-{
+static const char* readShader(const char* filename) {
 	std::ifstream file(filename, std::ifstream::ate | std::ifstream::binary);
 	if (!file.is_open())
 	{
-		std::cerr << "Failed to open file: " << filename << std::endl;
+		std::cerr << "Failed to open file: " << filename << "." << std::endl;
 		return NULL;
 	}
 
@@ -119,3 +119,4 @@ static const char* readShader(const char* filename)
 	return buffer;
 }
 
+#pragma endregion

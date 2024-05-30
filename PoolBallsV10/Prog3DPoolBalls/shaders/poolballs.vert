@@ -2,9 +2,9 @@
  * Discipline: 3D Programming
  * Subject: Pool Balls 3D Project
  * Authors: João Tavares nº 21871, Diogo Silva nº 22369, Ademar Valente nº 23155, José Lourenço nº23496
- * Date: 17/05/2024
+ * Date: 31/05/2024
  * File: poolballs.vert
- * Description: Vertex shader for the pool balls.
+ * Description: Vertex shader used on the project
  */
 
 #version 440 core
@@ -27,8 +27,7 @@ uniform mat4 ModelView;		// View * Model
 uniform mat4 Projection;
 uniform mat3 NormalMatrix;
 
-void main()
-{
+void main() {
     gl_Position = Projection * ModelView * vec4(vPosition, 1.0);
     color = vColors;
 
