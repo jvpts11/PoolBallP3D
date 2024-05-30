@@ -453,7 +453,6 @@ void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods
 	if (key == GLFW_KEY_SPACE && action == GLFW_PRESS)
 	{
 		animStart = true;
-		std::cout << "Space pressed." << std::endl;
 	}
 }
 
