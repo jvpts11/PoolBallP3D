@@ -13,7 +13,7 @@
 
 namespace PoolLib{
 
-#pragma region Global Variables
+#pragma region Global Variables that can be accessed by external classes
 
 	extern GLuint _shaderProgram;
 	extern glm::mat4 _modelMatrix;
@@ -26,6 +26,7 @@ namespace PoolLib{
 //-----------------------------------------------------------------------------------------------------
 #pragma region Structs
 
+	// Struct that contains the information of the material of the object
 	typedef struct {
 		float ns;
 		glm::vec3 ka;
@@ -35,6 +36,7 @@ namespace PoolLib{
 		std::string map_kd;
 	}Material;
 
+	// Struct that contains the information of the texture of the object
 	typedef struct {
 		int width;
 		int height;
@@ -48,21 +50,30 @@ namespace PoolLib{
 	class RenderBalls {
 	private:
 
+		// Position and orientation of the ball
 		glm::vec3 _position;
 		glm::vec3 _orientation;
 
+		// Id of the ball
 		int _id;
+
+		// Number of balls
 		const GLuint _numBalls;
 
+		// Vertices of the ball
 		std::vector<std::vector<float>> _ballVertices;
+
+		// VAO and VBOs of the balls
 		GLuint* _ballVAO;
 		GLuint* _ballVBOs;
 
+		// Materials and textures of the balls
 		std::vector<Material> _materials;
 		std::vector<Texture> _textures;
 		Material* _material;
 		Texture* _texture;
 
+		// Shader program
 		GLuint _shaderProgram;
 
 	public:
