@@ -377,7 +377,7 @@ void display() {
 	// Fetch uniform location for the render texture
 	GLint uRenderTexture = glGetUniformLocation(_shaderProgram, "renderTex");
 
-	// Set render texture uniform value to shader program
+	// Set render texture uniform value to shader program with index 0
 	glProgramUniform1i(_shaderProgram, uRenderTexture, 0);
 		
 	// Draw the table
