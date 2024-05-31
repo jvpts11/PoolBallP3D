@@ -4,9 +4,9 @@
  * Authors: João Tavares nº 21871, Diogo Silva nº 22369, Ademar Valente nº 23155, José Lourenço nº23496
  * Date: 17/05/2024
  * File: PoolLib.h
- * Description: Header file for the PoolLib class.
+ * Description: Signatures related to the implementation of the PoolLib class.
  */
-
+//-----------------------------------------------------------------------------------------------------
 #pragma once
 #include <iostream>
 #include <glm\glm.hpp>
@@ -20,8 +20,11 @@ namespace PoolLib{
 	extern glm::mat4 _viewMatrix;
 	extern glm::mat4 _projectionMatrix;
 	extern glm::mat3 _normalMatrix;
+	extern float _ballRadius;
 
 #pragma endregion
+//-----------------------------------------------------------------------------------------------------
+#pragma region Structs
 
 	typedef struct {
 		float ns;
@@ -39,60 +42,71 @@ namespace PoolLib{
 		unsigned char* image;
 	}Texture;
 
-class RenderBalls
-{
-private:
-	glm::vec3 _position;
-	glm::vec3 _orientation;
-	int _id;
+#pragma endregion
+//-----------------------------------------------------------------------------------------------------
 
-	const GLuint _numBalls;
-	std::vector<std::vector<float>> _ballVertices;
-	GLuint* _ballVAO;
-	GLuint* _ballVBOs;
+	class RenderBalls {
+	private:
 
-	std::vector<Material> _materials;
-	std::vector<Texture> _textures;
+		glm::vec3 _position;
+		glm::vec3 _orientation;
 
-	GLuint _shaderProgram;
-	Material* _material;
-	Texture* _texture;
+		int _id;
+		const GLuint _numBalls;
 
-public:
+		std::vector<std::vector<float>> _ballVertices;
+		GLuint* _ballVAO;
+		GLuint* _ballVBOs;
 
-	GLuint getNumberOfBalls() const { return _numBalls; };
-	const std::vector<std::vector<float>>& getBallVertices() const { return _ballVertices; };
-	const std::vector<Material>& getMaterials() const { return _materials; };
-	GLuint getShaderProgram() const { return _shaderProgram; };
+		std::vector<Material> _materials;
+		std::vector<Texture> _textures;
+		Material* _material;
+		Texture* _texture;
 
-	void setShaderProgram(GLuint shaderProgram) { _shaderProgram = shaderProgram; };
-	void setId(int id) { _id = id; };
+		GLuint _shaderProgram;
 
-	RenderBalls(GLuint numberOfBalls) : _numBalls(numberOfBalls)
-	{
-		_ballVAO = new GLuint[1];
-		_ballVBOs = new GLuint[_numBalls];
-		_shaderProgram = -1;
-		_id = 0;
+	public:
+
+		// Getter functions
+		GLuint getNumberOfBalls() const { return _numBalls; };
+		const std::vector<std::vector<float>>& getBallVertices() const { return _ballVertices; };
+		const std::vector<Material>& getMaterials() const { return _materials; };
+		GLuint getShaderProgram() const { return _shaderProgram; };
+
+		// Setter functions
+		void setShaderProgram(GLuint shaderProgram) { _shaderProgram = shaderProgram; };
+		void setId(int id) { _id = id; };
+
+		// Constructor
+		RenderBalls(GLuint numberOfBalls) : _numBalls(numberOfBalls)
+		{
+			_ballVAO = new GLuint[1];
+			_ballVBOs = new GLuint[_numBalls];
+			_shaderProgram = -1;
+			_id = 0;
+		};
+
+		// Destructor
+		~RenderBalls()
+		{
+			delete[] _ballVAO;
+			delete[] _ballVBOs;
+			_ballVertices.clear();
+			_materials.clear();
+		};
+
+		// Main functions
+		void Load(const std::string obj_model_filepath);
+		void Install(void);
+		void Render(glm::vec3 position, glm::vec3 orientation);
+
+		// Secondary functions
+		std::string getMtlFromObj(const char* obj_filepath);
+		Material loadMaterial(const char* mtl_filepath);
+		Texture loadTexture(std::string textureFile);
+		void loadMaterialUniforms(Material material, GLuint programShader);
+		void loadLightingUniforms();
+
 	};
 
-	~RenderBalls()
-	{
-		delete[] _ballVAO;
-		delete[] _ballVBOs;
-		_ballVertices.clear();
-		_materials.clear();
-	};
-
-	void Load(const std::string obj_model_filepath);
-	void Install(void);
-	void Render(glm::vec3 position, glm::vec3 orientation);
-
-	std::string getMtlFromObj(const char* obj_filepath);
-	Material loadMaterial(const char* mtl_filepath);
-	Texture loadTexture(std::string textureFile);
-	void loadMaterialUniforms(Material material, GLuint programShader);
-	void loadLightingUniforms();
-
-};
 }

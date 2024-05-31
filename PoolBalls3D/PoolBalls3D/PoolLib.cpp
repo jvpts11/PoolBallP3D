@@ -2,11 +2,11 @@
  * Discipline: 3D Programming
  * Subject: Pool Balls 3D Project
  * Authors: João Tavares nº 21871, Diogo Silva nº 22369, Ademar Valente nº 23155, José Lourenço nº23496
- * Date: 17/05/2024
+ * Date: 31/05/2024
  * File: PoolLib.cpp
- * Description: Implementation of the PoolLib class.
+ * Description: Implementation of the PoolLib library.
  */
-
+//-----------------------------------------------------------------------------------------------------
 #pragma region Imports
 
 #pragma comment(lib, "glew32s.lib")
@@ -38,21 +38,25 @@
 #include "PoolLib.h"
 
 #pragma endregion
+// -----------------------------------------------------------------------------------------------------
+#pragma region Library Implementation
 
 namespace PoolLib
 {
-#pragma region Global Variables
+	#pragma region Global Variables
 
 	GLuint _shaderProgram;
 	glm::mat4 _modelMatrix;
 	glm::mat4 _viewMatrix;
 	glm::mat4 _projectionMatrix;
 	glm::mat3 _normalMatrix;
+	float _ballRadius = 0.08f;
 
-#pragma endregion
+	#pragma endregion
+// -----------------------------------------------------------------------------------------------------
+	#pragma region PoolLib Class Main Functions
 
-	void RenderBalls::Load(const std::string obj_model_filepath)
-	{
+	void RenderBalls::Load(const std::string obj_model_filepath) {
 		std::vector<float> vertices;
 		
 		tinyobj::attrib_t attrib;
@@ -155,15 +159,14 @@ namespace PoolLib
 		}
 	}
 
-	void RenderBalls::Render(glm::vec3 position, glm::vec3 orientation)
-	{
+	void RenderBalls::Render(glm::vec3 position, glm::vec3 orientation) {
 		glm::mat4 translatedModel = glm::translate(_modelMatrix, position);
 
 		glm::mat4 rotatedModel = glm::rotate(translatedModel, glm::radians(orientation.x), glm::vec3(1.0f, 0.0f, 0.0f));
 		rotatedModel = glm::rotate(rotatedModel, glm::radians(orientation.y), glm::vec3(0.0f, 1.0f, 0.0f));
 		rotatedModel = glm::rotate(rotatedModel, glm::radians(orientation.z), glm::vec3(0.0f, 0.0f, 1.0f));
 
-		glm::mat4 scaledModel = glm::scale(rotatedModel, glm::vec3(0.08f));
+		glm::mat4 scaledModel = glm::scale(rotatedModel, glm::vec3(_ballRadius));
 
 		glm::mat4 modelViewMatrix = _viewMatrix * scaledModel;
 
@@ -184,6 +187,10 @@ namespace PoolLib
 		glDrawArrays(GL_TRIANGLES, 0, getBallVertices()[_id].size() / 8);
 
 	}
+
+	#pragma endregion
+// -----------------------------------------------------------------------------------------------------
+	#pragma region PoolLib Class Secondary Functions
 
 	std::string RenderBalls::getMtlFromObj(const char* obj_filepath) {
 
@@ -206,13 +213,12 @@ namespace PoolLib
 		return mtlFile;
 	}
 
-	Material RenderBalls::loadMaterial(const char* mtl_filepath)
-	{
+	Material RenderBalls::loadMaterial(const char* mtl_filepath) {
 		std::string directory = "textures/";
 		std::ifstream mtlFile(directory + mtl_filepath);
 		if (!mtlFile)
 		{
-			std::cerr << "Error: Could not open file " << mtl_filepath << std::endl;
+			std::cerr << "Error: Could not open file " << mtl_filepath << "." << std::endl;
 			return {};
 		}
 		std::string line;
@@ -262,8 +268,8 @@ namespace PoolLib
 		}
 		return material;
 	}
-	Texture RenderBalls::loadTexture(std::string texture_filepath)
-	{
+
+	Texture RenderBalls::loadTexture(std::string texture_filepath) {
 		Texture texture {};
 		int width, height, nChannels;
 		std::string directory = "textures/";
@@ -271,7 +277,7 @@ namespace PoolLib
 		unsigned char* image = stbi_load(fullPath.c_str(), &width, &height, &nChannels, 0);
 		if (!image)
 		{
-			std::cerr << "Error: Could not load texture " << texture_filepath << std::endl;
+			std::cerr << "Error: Could not load texture " << texture_filepath << "." << std::endl;
 			return {};
 		}
 		unsigned char* imageCopy = new unsigned char[width * height * nChannels];
@@ -285,6 +291,7 @@ namespace PoolLib
 		stbi_image_free(image);
 		return texture;
 	}
+
 	void RenderBalls::loadMaterialUniforms(Material material, GLuint programShader) {
 		glProgramUniform3fv(programShader, glGetProgramResourceLocation(programShader, GL_UNIFORM, "material.ambient"), 1, glm::value_ptr(material.ka));
 		glProgramUniform3fv(programShader, glGetProgramResourceLocation(programShader, GL_UNIFORM, "material.diffuse"), 1, glm::value_ptr(material.kd));
@@ -325,4 +332,8 @@ namespace PoolLib
 
 		glProgramUniform1i(_shaderProgram, glGetProgramResourceLocation(_shaderProgram, GL_UNIFORM, "lightModel"), 0);
 	}
+
+	#pragma endregion
 }
+
+#pragma endregion
