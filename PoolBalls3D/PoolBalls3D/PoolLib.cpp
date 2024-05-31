@@ -50,6 +50,7 @@ namespace PoolLib
 	glm::mat4 _viewMatrix;
 	glm::mat4 _projectionMatrix;
 	glm::mat3 _normalMatrix;
+	float _ballRadius = 0.08f;
 
 	#pragma endregion
 // -----------------------------------------------------------------------------------------------------
@@ -165,7 +166,7 @@ namespace PoolLib
 		rotatedModel = glm::rotate(rotatedModel, glm::radians(orientation.y), glm::vec3(0.0f, 1.0f, 0.0f));
 		rotatedModel = glm::rotate(rotatedModel, glm::radians(orientation.z), glm::vec3(0.0f, 0.0f, 1.0f));
 
-		glm::mat4 scaledModel = glm::scale(rotatedModel, glm::vec3(0.08f));
+		glm::mat4 scaledModel = glm::scale(rotatedModel, glm::vec3(_ballRadius));
 
 		glm::mat4 modelViewMatrix = _viewMatrix * scaledModel;
 

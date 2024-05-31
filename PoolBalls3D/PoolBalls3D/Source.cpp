@@ -41,12 +41,15 @@
 const GLuint _nTableVertices = 36;
 GLuint _tableVBO;
 GLuint _tableVAO;
+float xCoord = 2.0f;
+float yCoord = 0.25f;
+float zCoord = 1.25f;
 
 // Camera variables
 GLfloat _angle = -10.0f;
 glm::vec3 _cameraPosition = glm::vec3(0.0f, 1.0f, 5.0f);
 
-// Shader variables
+// Shader Program variables
 GLuint _shaderProgram;
 
 // Lighting variables
@@ -72,7 +75,7 @@ bool animStart = false;
 
 // Ball variables
 PoolLib::RenderBalls _balls(15);
-std::vector<glm::vec3> _ballVertices = {generateRandomBallPositions(15, 3.7, 2.2, 0.08)};
+std::vector<glm::vec3> _ballVertices = {generateRandomBallPositions(_balls.getNumberOfBalls(), xCoord * 1.75f, zCoord * 1.75f, PoolLib::_ballRadius)};
 std::vector<glm::vec3> _ballOrientations = {
 	glm::vec3(0.0f),	// Ball 1
 	glm::vec3(0.0f),	// Ball 2
@@ -96,19 +99,25 @@ std::vector<glm::vec3> _ballOrientations = {
 #pragma region Main Function
 
 int main() {
-	// Initialize GLFW
+
+	// In case there is an error with GLFW
+	glfwSetErrorCallback(printErrorCallback);
+
+	// Initialize GLFW and check for errors
 	if (!glfwInit())
 	{
-		std::cerr << "Failed to initialize GLFW" << std::endl;
+		std::cerr << "Failed to initialize GLFW." << std::endl;
 		return -1;
 	}
 
-	// Create a windowed mode window and its OpenGL context
+	// Create a window
 	GLFWwindow* window = glfwCreateWindow(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE, NULL, NULL);
+
+	// Check if the window was created successfully
 	if (!window)
 	{
 		glfwTerminate();
-		std::cerr << "Failed to create window" << std::endl;
+		std::cerr << "Failed to create window." << std::endl;
 		return -1;
 	}
 
@@ -118,29 +127,30 @@ int main() {
 	// Initialize GLEW
 	if (glewInit() != GLEW_OK)
 	{
-		std::cerr << "Failed to initialize GLEW" << std::endl;
+		std::cerr << "Failed to initialize GLEW." << std::endl;
 		glfwTerminate();
 		return -1;
 	}
 
+	// Initialize the program
 	init();
 
-	//set zoom callback
+	// Zoom callback for zooming in and out
 	glfwSetScrollCallback(window, scrollCallback);
 
-	//set mouse callback
+	// Mouse callback for camera rotation
 	glfwSetCursorPosCallback(window, mouseCallback);
 
-	//set key callback
+	// Key callback for starting the ball animation
 	glfwSetKeyCallback(window, keyCallback);
 
-	//set character callback
+	// Character callback for enabling and disabling the different light models
 	glfwSetCharCallback(window, characterCallback);
 
 	// Loop until the user closes the window
 	while (!glfwWindowShouldClose(window))
 	{
-		// Render here
+		// Render the scene
 		display();
 
 		// Swap front and back buffers
@@ -150,8 +160,10 @@ int main() {
 		glfwPollEvents();
 	}
 
+	// Terminate GLFW and the program
 	glfwTerminate();
 	return 0;
+
 }
 
 #pragma endregion
@@ -159,240 +171,268 @@ int main() {
 #pragma region Secondary Functions
 
 void init() {
-	//table position
-	float xCoord = 2.0f;
-	float yCoord = 0.25f;
-	float zCoord = 1.25f;
 
-	//table colors
+	// Table vertices colors
 	std::vector<glm::vec3> colors{
-		glm::vec3(0.0f, 0.0f, 1.0f), //blue
-		glm::vec3(1.0f, 0.0f, 0.0f), //red
-		glm::vec3(0.0f, 1.0f, 0.0f), //green
-		glm::vec3(0.0f, 1.0f, 1.0f), //cyan
-		glm::vec3(1.0f, 1.0f, 0.0f), //yellow
-		glm::vec3(1.0f, 1.0f, 1.0f) //white
+		glm::vec3(0.0f, 0.0f, 1.0f), // Blue
+		glm::vec3(1.0f, 0.0f, 0.0f), // Red
+		glm::vec3(0.0f, 1.0f, 0.0f), // Green
+		glm::vec3(0.0f, 1.0f, 1.0f), // Cyan
+		glm::vec3(1.0f, 1.0f, 0.0f), // Yellow
+		glm::vec3(1.0f, 1.0f, 1.0f)  // White
 	};
 
-	//table texture coordinates
+	// Table texture coordinates
 	float xTexture = 0.0f;
 	float yTexture = 0.0f;
 
-	//table vertices
+	// Table vertices data
 	GLfloat _tableVertices[_nTableVertices * 8] = {
-		//X+ face
-		//triangle 1
+		// X+ face
+		// Triangle 1
 		xCoord, -yCoord, zCoord,		 colors[0].r, colors[0].g, colors[0].b,		xTexture, yTexture,
 		xCoord, -yCoord, -zCoord,	     colors[0].r, colors[0].g, colors[0].b,		xTexture, yTexture,
 		xCoord, yCoord, zCoord,		     colors[0].r, colors[0].g, colors[0].b,		xTexture, yTexture,
-		//triangle 2
+		// Triangle 2
 		xCoord, yCoord, zCoord,		     colors[0].r, colors[0].g, colors[0].b,		xTexture, yTexture,
 		xCoord, -yCoord, -zCoord,	     colors[0].r, colors[0].g, colors[0].b,		xTexture, yTexture,
 		xCoord, yCoord, -zCoord,	     colors[0].r, colors[0].g, colors[0].b,		xTexture, yTexture,
 
-		//X- face
-		//triangle 1
+		//---------------------------------------------------------------------------------------------
+		// X- face
+		// Triangle 1
 		-xCoord, -yCoord, -zCoord,	     colors[1].r, colors[1].g, colors[1].b,		xTexture, yTexture,
 		-xCoord, -yCoord, zCoord,	     colors[1].r, colors[1].g, colors[1].b,		xTexture, yTexture,
 		-xCoord, yCoord, -zCoord,	     colors[1].r, colors[1].g, colors[1].b,		xTexture, yTexture,
-		//triangle 2
+		// Triangle 2
 		-xCoord, yCoord, -zCoord,	     colors[1].r, colors[1].g, colors[1].b,		xTexture, yTexture,
 		-xCoord, -yCoord, zCoord,	     colors[1].r, colors[1].g, colors[1].b,		xTexture, yTexture,
 		-xCoord, yCoord, zCoord,	     colors[1].r, colors[1].g, colors[1].b,		xTexture, yTexture,
 
-		//Y+ face
-		//triangle 1
+		//---------------------------------------------------------------------------------------------
+		// Y+ face
+		// Triangle 1
 		-xCoord, yCoord, zCoord,	     colors[2].r, colors[2].g, colors[2].b,		xTexture, yTexture,
 		xCoord, yCoord,  zCoord,	     colors[2].r, colors[2].g, colors[2].b,		xTexture, yTexture,
 		-xCoord, yCoord, -zCoord,	     colors[2].r, colors[2].g, colors[2].b,		xTexture, yTexture,
-		//triangle 2
+		// Triangle 2
 		-xCoord, yCoord, -zCoord,	     colors[2].r, colors[2].g, colors[2].b,		xTexture, yTexture,
 		xCoord, yCoord,  zCoord,	     colors[2].r, colors[2].g, colors[2].b,		xTexture, yTexture,
 		xCoord, yCoord, -zCoord,	     colors[2].r, colors[2].g, colors[2].b,		xTexture, yTexture,
 
-		//Y- face
-		//triangle 1
+		//---------------------------------------------------------------------------------------------
+		// Y- face
+		// Triangle 1
 		-xCoord, -yCoord, -zCoord,	     colors[3].r, colors[3].g, colors[3].b,		xTexture, yTexture,
 		xCoord, -yCoord, -zCoord,	     colors[3].r, colors[3].g, colors[3].b,		xTexture, yTexture,
 		-xCoord, -yCoord, zCoord,	     colors[3].r, colors[3].g, colors[3].b,		xTexture, yTexture,
-		//triangle 2
+		// Triangle 2
 		-xCoord, -yCoord, zCoord,	     colors[3].r, colors[3].g, colors[3].b,		xTexture, yTexture,
 		xCoord, -yCoord, -zCoord,	     colors[3].r, colors[3].g, colors[3].b,		xTexture, yTexture,
 		xCoord, -yCoord, zCoord,	     colors[3].r, colors[3].g, colors[3].b,		xTexture, yTexture,
 
-		//Z+ face
-		//triangle 1
+		//---------------------------------------------------------------------------------------------
+		// Z+ face
+		// Triangle 1
 		-xCoord, -yCoord, zCoord,	     colors[4].r, colors[4].g, colors[4].b,		xTexture, yTexture,
 		xCoord, -yCoord, zCoord,	     colors[4].r, colors[4].g, colors[4].b,		xTexture, yTexture,
 		-xCoord, yCoord, zCoord,	     colors[4].r, colors[4].g, colors[4].b,		xTexture, yTexture,
-		//triangle 2
+		// Triangle 2
 		 -xCoord, yCoord, zCoord,	     colors[4].r, colors[4].g, colors[4].b,		xTexture, yTexture,
 		xCoord, -yCoord,  zCoord,	     colors[4].r, colors[4].g, colors[4].b,		xTexture, yTexture,
 		xCoord, yCoord, zCoord,			 colors[4].r, colors[4].g, colors[4].b,		xTexture, yTexture,
 
-		//Z- face
-		//triangle 1
+		//---------------------------------------------------------------------------------------------
+		// Z- face
+		// Triangle 1
 		xCoord, -yCoord, -zCoord,	     colors[5].r, colors[5].g, colors[5].b,		xTexture, yTexture,
 		-xCoord, -yCoord, -zCoord,	     colors[5].r, colors[5].g, colors[5].b,		xTexture, yTexture,
 		xCoord, yCoord, -zCoord,	     colors[5].r, colors[5].g, colors[5].b,		xTexture, yTexture,
-		//triangle 2
+		// Triangle 2
 		xCoord, yCoord, -zCoord,	     colors[5].r, colors[5].g, colors[5].b,		xTexture, yTexture,
 		-xCoord, -yCoord, -zCoord,	     colors[5].r, colors[5].g, colors[5].b,		xTexture, yTexture,
 		-xCoord, yCoord, -zCoord,	     colors[5].r, colors[5].g, colors[5].b,		xTexture, yTexture
 	};
 
-	//generate VAO
+	// Generate the VAO used for the table
 	glGenVertexArrays(1, &_tableVAO);
 	glBindVertexArray(_tableVAO);
 
-	//generate VBO
+	// Generate the VBO used for the table
 	glGenBuffers(1, &_tableVBO);
 	glBindBuffer(GL_ARRAY_BUFFER, _tableVBO);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(_tableVertices), _tableVertices, GL_STATIC_DRAW);
 
-
-	//set vertex attribute pointers
+	// Set vertex attribute pointers for the table
+	// Position attribute
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), (GLvoid*)0);
 	glEnableVertexAttribArray(0);
+	// Normal attribute
 	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), (GLvoid*)(3 * sizeof(GLfloat)));
 	glEnableVertexAttribArray(1);
+	// Texture attribute
 	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), (GLvoid*)(6 * sizeof(GLfloat)));
 	glEnableVertexAttribArray(2);
 
-
-	//unbind VAO
+	// Unbind current VAO
 	glBindVertexArray(0);
 
+	// Fetch and load each ball texture
 	for (int i = 1; i <= _balls.getNumberOfBalls(); i++)
 	{
 		std::string texturePath = "textures/Ball" + std::to_string(i) + ".obj";
 		_balls.Load(texturePath);
 	}
+
+	// Generates the VAO for the balls
+	// Generates the VBOs for the each ball
+	// Sends balls vertice data to the GPU
 	_balls.Install();
 
-	//shader info
+	// Fetch the vertex and fragment shaders
 	shaderInfo shaders[] = {
 		{ GL_VERTEX_SHADER, "shaders/poolballs.vert" },
 		{ GL_FRAGMENT_SHADER, "shaders/poolballs.frag" },
 		{ GL_NONE, NULL }
 	};
 	
-	//load shaders
+	// Load shaders
 	_shaderProgram = loadShaders(shaders);
 
-	//bind shader program
+	// Bind shader program
 	glUseProgram(_shaderProgram);
 
-	//store attributes
+	// Fetch attribute locations
 	GLint vPosition = glGetProgramResourceLocation (_shaderProgram, GL_PROGRAM_INPUT, "vPosition");
 	GLint vNormal = glGetProgramResourceLocation(_shaderProgram, GL_PROGRAM_INPUT, "vNormal");
 	GLint vTexCoords = glGetProgramResourceLocation(_shaderProgram, GL_PROGRAM_INPUT, "vTextureCoords");
-
-	//link attributes to vao and vbo
+	
+	// Set vertex attribute pointers for the balls
+	// Position attribute
 	glVertexAttribPointer(vPosition, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), (GLvoid*)0);
 	glEnableVertexAttribArray(vPosition);
+	// Normal attribute
 	glVertexAttribPointer(vNormal, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), (GLvoid*)(3 * sizeof(GLfloat)));
 	glEnableVertexAttribArray(vNormal);
+	// Texture attribute
 	glVertexAttribPointer(vTexCoords, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), (GLvoid*)(6 * sizeof(GLfloat)));
 	glEnableVertexAttribArray(vTexCoords);
 
-	//transformation matrices
+	// Matrixes declarations
 	PoolLib::_viewMatrix = glm::lookAt(_cameraPosition, glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 	PoolLib::_modelMatrix = glm::rotate(glm::mat4(1.0f), _angle, glm::vec3(0.0f,1.0f,0.0f));
 	glm::mat4 _modelViewMatrix = PoolLib::_viewMatrix * PoolLib::_modelMatrix;
 	PoolLib::_projectionMatrix = glm::perspective(45.0f, (GLfloat)SCREEN_WIDTH / (GLfloat)SCREEN_HEIGHT, 0.1f, 100.0f);
 	PoolLib::_normalMatrix = glm::inverseTranspose(glm::mat3(_modelViewMatrix));
 
-	//store uniform locations
+	// Fecth uniform locations
 	GLint uModelMatrix = glGetUniformLocation(_shaderProgram, "Model");
 	GLint uNormalMatrix = glGetUniformLocation(_shaderProgram, "NormalMatrix");
 	GLint uProjectionMatrix = glGetUniformLocation(_shaderProgram, "Projection");
 	GLint uViewMatrix = glGetUniformLocation(_shaderProgram, "View");
 	GLint uModelViewMatrix = glGetUniformLocation(_shaderProgram, "ModelView");
 
-	//link uniform values to program
+	// Link uniforms values to program and their respective matrixes
 	glProgramUniformMatrix4fv(_shaderProgram, uModelMatrix, 1, GL_FALSE, glm::value_ptr(PoolLib::_modelMatrix));
 	glProgramUniformMatrix3fv(_shaderProgram, uNormalMatrix, 1, GL_FALSE, glm::value_ptr(PoolLib::_normalMatrix));
 	glProgramUniformMatrix4fv(_shaderProgram, uProjectionMatrix, 1, GL_FALSE, glm::value_ptr(PoolLib::_projectionMatrix));
 	glProgramUniformMatrix4fv(_shaderProgram, uViewMatrix, 1, GL_FALSE, glm::value_ptr(PoolLib::_viewMatrix));
 	glProgramUniformMatrix4fv(_shaderProgram, uModelViewMatrix, 1, GL_FALSE, glm::value_ptr(_modelViewMatrix));
 
+	// Set the shader program to the balls
 	_balls.setShaderProgram(_shaderProgram);
 
+	// Load lighting uniforms
 	_balls.loadLightingUniforms();
 
-	//define render window
+	// Define render window
 	glViewport(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
 
+	// Enable depth test
 	glEnable(GL_DEPTH_TEST);
 
+	// Enable face culling
 	glEnable(GL_CULL_FACE);
 
 }
 
 void display() {
-	//clear the color buffer
+
+	// Clear the color and depth buffers
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 
-	//translate the table
+	// Get a translation matrix for the model
 	glm::mat4 translateModel = glm::translate(PoolLib::_modelMatrix, glm::vec3(0.0f, 0.0f, 0.0f));
 
-	//create view model matrix
+	// Create a view model matrix
 	glm::mat4 viewModelMatrix = PoolLib::_viewMatrix * translateModel;
 
-	//get uniform locations
+	// Get view model matrix uniform location
 	GLint uModelViewMatrix = glGetUniformLocation(_shaderProgram, "ModelView");
 
-	//link uniform values to program
+	// Link uniform values to program
 	glProgramUniformMatrix4fv(_shaderProgram, uModelViewMatrix, 1, GL_FALSE, glm::value_ptr(viewModelMatrix));
 
-	//link render texture to program
+	// Fetch uniform location for the render texture
 	GLint uRenderTexture = glGetUniformLocation(_shaderProgram, "renderTex");
+
+	// Set render texture uniform value to shader program
 	glProgramUniform1i(_shaderProgram, uRenderTexture, 0);
 		
-	//draw table
+	// Draw the table
 	glBindVertexArray(_tableVAO);
 	glDrawArrays(GL_TRIANGLES, 0, _nTableVertices);
 
+	// Material properties used for the balls
 	PoolLib::Material material;
 	material.ns = 1.0f;
 	material.ka = glm::vec3(1.0f);
 	material.kd = glm::vec3(1.0f);
 	material.ks = glm::vec3(1.0f);
 
+
+	// Load material uniforms for the balls
 	_balls.loadMaterialUniforms(material, _shaderProgram);
 
+	// Draw the balls
 	for (int i = 0; i < _balls.getNumberOfBalls(); i++)
 	{
 		_balls.setId(i);
 		_balls.Render(_ballVertices[i], _ballOrientations[i]);
 	}
+
+	// Ball animation
 	if (animStart)
 	{
-		//check for collision
+		// Check for collision
 		if (getCollision())
 		{
 			animStart = false;
 		}
 		else
 		{
-			//update ball position
+			// Update ball position
 			_ballVertices[animBallIndex].x += 0.005f;
 			_ballVertices[animBallIndex].z += 0.005f;
 
-			//update ball orientation
-			_ballOrientations[animBallIndex].x += 0.1f;
-			_ballOrientations[animBallIndex].z += 0.1f;
-
+			// Update ball orientation
+			_ballOrientations[animBallIndex].x += 2.0f;
+			_ballOrientations[animBallIndex].z += 2.0f;
 		}
 	}
 
 }
 
+// Callback used for printing errors
+void printErrorCallback(int code, const char* description) {
+	std::cout << description << std::endl;
+}
+
 // Callback used for zooming in and out
 void scrollCallback(GLFWwindow* window, double xoffset, double yoffset) {
-	//zoom in and out
+	
+	// Zoom in and out
 	if (yoffset > 0)
 	{
 		_zoomLvl -= _zoomSpeed;
@@ -402,25 +442,29 @@ void scrollCallback(GLFWwindow* window, double xoffset, double yoffset) {
 		_zoomLvl += _zoomSpeed;
 	}
 	
-	//clamp zoom level
+	// Clamps the zoom level between the minimum and maximum zoom
 	_zoomLvl = glm::clamp(_zoomLvl, _minZoom, _maxZoom);
 
-	//update projection matrix
+	// Update projection matrix
 	PoolLib::_projectionMatrix = glm::perspective(glm::radians(45.0f)*_zoomLvl, (GLfloat)SCREEN_WIDTH / (GLfloat)SCREEN_HEIGHT, 0.1f, 100.0f);
 
-	//update uniform value
+	// Update uniform value of projection
 	GLint uProjectionMatrix = glGetUniformLocation(_shaderProgram, "Projection");
 	glProgramUniformMatrix4fv(_shaderProgram, uProjectionMatrix, 1, GL_FALSE, glm::value_ptr(PoolLib::_projectionMatrix));
 }
 
 // Callback used for camera rotation
 void mouseCallback(GLFWwindow* window, double xpos, double ypos) {
+
+	// Gets the beginning of the mouse movement
 	if (_firstMouse)
 	{
 		_lastX = xpos;
 		_lastY = ypos;
 		_firstMouse = false;
 	}
+
+	// Gets current mouse position
 	if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) != GLFW_PRESS)
 	{
 		_lastX = xpos;
@@ -429,21 +473,23 @@ void mouseCallback(GLFWwindow* window, double xpos, double ypos) {
 		return;
 	}
 
+	// Calculates the offset of the mouse movement
 	float xoffset = xpos - _lastX;
 	float yoffset = _lastY - ypos;
 
+	// Updates the current mouse position
 	_lastX = xpos;
 	_lastY = ypos;
 
 	float sensitivity = 0.1f;
 	
-	//apply horizontal rotation
+	// Apply horizontal rotation
 	PoolLib::_viewMatrix = glm::rotate(PoolLib::_viewMatrix,glm::radians (xoffset * sensitivity), glm::vec3(0.0f, 1.0f, 0.0f));
 
-	//calculate right vector
+	// Calculate right vector
 	glm::vec3 right = glm::normalize(glm::cross(glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(0.0f, 0.0f, 1.0f)));
 
-	//apply vertical rotation
+	// Apply vertical rotation
 	PoolLib::_viewMatrix = glm::rotate(PoolLib::_viewMatrix,glm::radians (yoffset * sensitivity), right);
 
 }	
@@ -452,21 +498,25 @@ void mouseCallback(GLFWwindow* window, double xpos, double ypos) {
 void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods) {
 	if (key == GLFW_KEY_SPACE && action == GLFW_PRESS)
 	{
+		// Sets the animation to start
 		animStart = true;
 	}
 }
 
 // Callback used for enabling and disabling the different light models
 void characterCallback(GLFWwindow* window, unsigned int codepoint) {
+
 	int lightMode;
 
 	switch (codepoint)
 	{
+		// Key 1 - Ambient light
 	case '1':
 		if (_ambient)
 		{
 			_ambient = false;
 			lightMode = 0;
+			// Aplly the light model to the shader program
 			glProgramUniform1i(_shaderProgram, glGetUniformLocation(_shaderProgram, "lightModel"), lightMode);
 			std::cout << "Lights disabled." << std::endl;
 			break;
@@ -475,15 +525,19 @@ void characterCallback(GLFWwindow* window, unsigned int codepoint) {
 		{
 			_ambient = true;
 			lightMode = 1;
+			// Aplly the light model to the shader program
 			glProgramUniform1i(_shaderProgram, glGetUniformLocation(_shaderProgram, "lightModel"), lightMode);
 			std::cout << "Ambient light enabled." << std::endl;
 			break;
-		}		
+		}
+
+		// Key 2 - Directional light
 	case '2':
 		if (_directional)
 		{
 			_directional = false;
 			lightMode = 0;
+			// Aplly the light model to the shader program
 			glProgramUniform1i(_shaderProgram, glGetUniformLocation(_shaderProgram, "lightModel"), lightMode);
 			std::cout << "Lights disabled." << std::endl;
 			break;
@@ -492,15 +546,19 @@ void characterCallback(GLFWwindow* window, unsigned int codepoint) {
 		{
 			_directional = true;
 			lightMode = 2;
+			// Aplly the light model to the shader program
 			glProgramUniform1i(_shaderProgram, glGetUniformLocation(_shaderProgram, "lightModel"), lightMode);
 			std::cout << "Directional light enabled." << std::endl;
 			break;
-		}		
+		}
+
+		// Key 3 - Point light
 	case '3':
 		if (_point)
 		{
 			_point = false;
 			lightMode = 0;
+			// Aplly the light model to the shader program
 			glProgramUniform1i(_shaderProgram, glGetUniformLocation(_shaderProgram, "lightModel"), lightMode);
 			std::cout << "Lights disabled." << std::endl;
 			break;
@@ -509,15 +567,19 @@ void characterCallback(GLFWwindow* window, unsigned int codepoint) {
 		{
 			_point = true;
 			lightMode = 3;
+			// Aplly the light model to the shader program
 			glProgramUniform1i(_shaderProgram, glGetUniformLocation(_shaderProgram, "lightModel"), lightMode);
 			std::cout << "Point light enabled." << std::endl;
 			break;
-		}		
+		}	
+
+		// Key 4 - Spot light
 	case '4':
 		if (_spot)
 		{
 			_spot = false;
 			lightMode = 0;
+			// Aplly the light model to the shader program
 			glProgramUniform1i(_shaderProgram, glGetUniformLocation(_shaderProgram, "lightModel"), lightMode);
 			std::cout << "Lights disabled." << std::endl;
 			break;
@@ -526,6 +588,7 @@ void characterCallback(GLFWwindow* window, unsigned int codepoint) {
 		{
 			_spot = true;
 			lightMode = 4;
+			// Aplly the light model to the shader program
 			glProgramUniform1i(_shaderProgram, glGetUniformLocation(_shaderProgram, "lightModel"), lightMode);
 			std::cout << "Spot light enabled." << std::endl;
 			break;
@@ -536,30 +599,42 @@ void characterCallback(GLFWwindow* window, unsigned int codepoint) {
 }
 
 bool getCollision() {
-	float _radius = 0.08f;
+	
+	float ballDiameter = 2 * PoolLib::_ballRadius;
+
+	// Checks for collisions between the animated ball and the other balls
 	for (int i = 0; i < _balls.getNumberOfBalls(); i++)
 	{
 		if (i != animBallIndex)
 		{
 			float distance = glm::distance(_ballVertices[i], _ballVertices[animBallIndex]);
-			if (distance <= 2 * _radius)
+			if (distance <= 2 * PoolLib::_ballRadius)
 			{
 				std::cout << "Collision detected with another ball." << std::endl;
+				// Ball collision detected
 				return true;
 			}
 		}
 
 	}
-	if (_ballVertices[animBallIndex].x + _radius >= 2.05f || _ballVertices[animBallIndex].x - _radius <= -2.05f ||
-		_ballVertices[animBallIndex].z + _radius >= 1.3f || _ballVertices[animBallIndex].z - _radius <= -1.3f)
+
+	// Checks for collisions between the animated ball and the table edges
+	if (_ballVertices[animBallIndex].x + ballDiameter >= xCoord || _ballVertices[animBallIndex].x - ballDiameter <= -xCoord ||
+		_ballVertices[animBallIndex].z + ballDiameter >= zCoord || _ballVertices[animBallIndex].z - ballDiameter <= -zCoord )
 	{
 		std::cout << "Collision detected with table edges." << std::endl;
+		// Table edge collision detected
 		return true;
 	}
+
+	// No collision detected
 	return false;
 }
 
+// Function used to generate random ball positions
+// The function receives the number of balls, the table width and height, and the ball radius
 std::vector<glm::vec3> generateRandomBallPositions(int numBalls, float tableWidth, float tableHeight, float ballRadius) {
+	
 	std::vector<glm::vec3> positions;
 	std::srand(static_cast<unsigned int>(std::time(0)));
 
@@ -589,6 +664,7 @@ std::vector<glm::vec3> generateRandomBallPositions(int numBalls, float tableWidt
 	}
 
 	return positions;
+
 }
 
 #pragma endregion

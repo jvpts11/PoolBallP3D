@@ -20,6 +20,7 @@ namespace PoolLib{
 	extern glm::mat4 _viewMatrix;
 	extern glm::mat4 _projectionMatrix;
 	extern glm::mat3 _normalMatrix;
+	extern float _ballRadius;
 
 #pragma endregion
 //-----------------------------------------------------------------------------------------------------
