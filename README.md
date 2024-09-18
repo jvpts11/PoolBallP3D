@@ -59,4 +59,13 @@ Be aware, the project contains a `.zip` file with the object files for the balls
 
 ---
 
+## Makers
+
+- [Ademar Valente](https://github.com/ademar1k82)
+- [José Lourenço](https://github.com/Zeet76)
+- [Diogo Silva](https://github.com/DiogoV10)
+- [João Tavares](https://github.com/jvpts11)
+
+---
+
 This project was developed for academic purposes as part of the **2nd Year 3D Programming** class at IPCA, 2024.
