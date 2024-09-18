@@ -59,4 +59,4 @@ Be aware, the project contains a `.zip` file with the object files for the balls
 
 ---
 
-This project was developed for academic purposes as part of the **3rd Year 3D Programming** class at IPCA, 2024.
+This project was developed for academic purposes as part of the **2nd Year 3D Programming** class at IPCA, 2024.
