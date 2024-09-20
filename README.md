@@ -59,7 +59,7 @@ Be aware, the project contains a `.zip` file with the object files for the balls
 
 ---
 
-## Makers
+## Dev Team
 
 - [Ademar Valente](https://github.com/ademar1k82)
 - [José Lourenço](https://github.com/Zeet76)
