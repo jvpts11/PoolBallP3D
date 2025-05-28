@@ -62,7 +62,7 @@ Be aware, the project contains a `.zip` file with the object files for the balls
 ## Dev Team
 
 - [Ademar Valente](https://github.com/ademar1k82)
-- [José Lourenço](https://github.com/Zeet76)
+- [José Lourenço](https://github.com/jpmlourenco76)
 - [Diogo Silva](https://github.com/DiogoV10)
 - [João Tavares](https://github.com/jvpts11)
 
